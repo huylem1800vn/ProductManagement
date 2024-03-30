@@ -25,7 +25,7 @@ module.exports.index = async (req, res) => {
     }
   ];// mảng chứa các phần tử button trong trang products
 
-  // Filter tìm kiếm bằng status
+  // Filter tìm kiếm bằng status, gắn class active
   if(req.query.status) {
     const index = filterStatus.findIndex(item => item.status == req.query.status);// tìm trong mảng filterStatus có bản ghi status bằng với bản ghi nào có status bằng item.status và trả về index của bản ghi đó
     filterStatus[index].class = "active";

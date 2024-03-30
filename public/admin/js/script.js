@@ -1,5 +1,4 @@
 // Button status
-
 const listButtonStatus = document.querySelectorAll("[button-status]");
 if (listButtonStatus.length > 0) {
     let url = new URL(window.location.href); // tạo ra một url mới
@@ -17,6 +16,24 @@ if (listButtonStatus.length > 0) {
         })
     })
 }
-
-
 // End Button status
+
+// Form Search 
+const formsearch = document.querySelector("#form-search");
+if(formsearch) {
+    let url = new URL(window.location.href);
+
+    formsearch.addEventListener("submit", (event) => {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định, load lại page và link thẳng đường dẫn keyword=...
+        
+        const keyword = event.target.elements.keyword.value;
+        
+        if(keyword){
+            url.searchParams.set("keyword", keyword); 
+        } else {
+            url.searchParams.delete("keyword");
+        }
+        window.location.href = url.href; 
+    })
+}
+// End Form Search 
