@@ -23,15 +23,37 @@ module.exports.index = async (req, res) => {
   }
   // End Search 
 
-  const products = await Product.find(find);// Trả ra tất cả các bản ghi trong database theo điều kiện, nếu không có điều kiện thì trả ra hết
+  // Pagination (Phân trang) 
+  const objectPagination = {
+    currentPage: 1,
+    limitItems: 4,
+  }
 
+  if(req.query.page) {
+    objectPagination.currentPage = parseInt(req.query.page);
+  }
+
+  objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItems;
+
+  const countRecords = await Product.countDocuments(find);
+  objectPagination.totalPage = Math.ceil(countRecords / objectPagination.limitItems);
+  // Đếm các document(mỗi bảng ghi là 1 document)
+  // End Pagination (Phân trang) 
+
+  const products = await Product
+  .find(find)
+  .limit(objectPagination.limitItems)
+  .skip(objectPagination.skip);
+
+  // Chọc vào model Product trả ra tất cả các bản ghi trong database theo điều kiện, nếu không có điều kiện thì trả ra hết
 
   res.render("admin/pages/products/index", 
     {
       pageTitle : "Danh sách sản phẩm",
       products: products,
       filterStatus: filterStatus,
-      keyword: req.query.keyword
+      keyword: req.query.keyword,
+      objectPagination: objectPagination,
     }
     )
   };
