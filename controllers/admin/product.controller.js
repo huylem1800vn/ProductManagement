@@ -1,9 +1,9 @@
 const Product = require("../../models/product.model");
 const filterHelper = require("../../helpers/filter.helper");
 const paginationHelper = require("../../helpers/pagination.helper");
+const systemConfig = require("../../config/system");
 
 // [GET] /admin/products/
-
 module.exports.index = async (req, res) => {
   const find = {
     deleted: false,
@@ -23,9 +23,10 @@ module.exports.index = async (req, res) => {
     find.title = regex;
   }
   // End Search 
-
+  
   // Pagination (Phân trang) 
   const countRecords = await Product.countDocuments(find);
+  // Đếm các document(mỗi bảng ghi là 1 document)
   const objectPagination = paginationHelper(req, countRecords);
   // End Pagination (Phân trang) 
 
@@ -46,6 +47,20 @@ module.exports.index = async (req, res) => {
     }
     )
   };
+
+// [GET] /admin/products/:status/:id
+module.exports.changeStatus = async (req, res) => {
+  const status = req.params.status;
+  const id = req.params.id;
+
+  await Product.updateOne({
+    _id: id
+  }, {
+    status: status
+  });// Tìm bản ghi có id và update status
+  
+  res.redirect(`back`);
+}
 
   
   

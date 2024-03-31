@@ -5,7 +5,8 @@ const router = express.Router();
 const controller = require("../../controllers/admin/product.controller");
 
 router.get('/', controller.index);
-
+router.get('/:status/:id', controller.changeStatus);
+// :status là định nghĩa 1 param động
 module.exports = router;
 
   
