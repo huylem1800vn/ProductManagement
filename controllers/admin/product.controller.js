@@ -44,11 +44,12 @@ module.exports.index = async (req, res) => {
       filterStatus: filterStatus,
       keyword: req.query.keyword,
       objectPagination: objectPagination,
+      systemConfig: systemConfig
     }
     )
   };
 
-// [GET] /admin/products/:status/:id
+// [PATCH] /admin/products/:status/:id
 module.exports.changeStatus = async (req, res) => {
   const status = req.params.status;
   const id = req.params.id;

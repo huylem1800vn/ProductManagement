@@ -40,7 +40,6 @@ if(formsearch) {
 
 // Button Pagination 
 const listButtonPagination = document.querySelectorAll("[button-pagination]");
-console.log(listButtonPagination)
 if(listButtonPagination.length > 0){
     let url = new URL(window.location.href);
 
@@ -53,3 +52,24 @@ if(listButtonPagination.length > 0){
     }) 
 }
 // End Button Pagination 
+
+// button-change-status 
+const listButtonChangeStauts = document.querySelectorAll("[button-change-status]");
+if(listButtonChangeStauts.length > 0){
+    const formChangeStatus = document.querySelector("[form-change-status]");
+
+    listButtonChangeStauts.forEach(button => {
+        button.addEventListener("click", () => {
+            const id = button.getAttribute("data-id");
+            const status = button.getAttribute("data-status");
+            const path = formChangeStatus.getAttribute("data-path");
+
+            const action = `${path}/${status}/${id}?_method=PATCH`;
+
+            formChangeStatus.action = action;
+
+            formChangeStatus.submit();
+        });
+    });
+}
+// end button-change-status 
