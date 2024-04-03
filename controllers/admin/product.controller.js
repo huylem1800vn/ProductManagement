@@ -44,7 +44,7 @@ module.exports.index = async (req, res) => {
       filterStatus: filterStatus,
       keyword: req.query.keyword,
       objectPagination: objectPagination,
-      systemConfig: systemConfig
+      prefixAdmin: systemConfig.prefixAdmin
     }
     )
   };
@@ -60,6 +60,31 @@ module.exports.changeStatus = async (req, res) => {
     status: status
   });// Tìm bản ghi có id và update status
   
+  res.redirect(`back`);
+}
+
+// [PATCH] /admin/products/change-multi
+module.exports.changeMulti = async (req, res) => {
+  console.log(req.body);
+  const type = req.body.type;
+  let ids = req.body.ids;// lấy danh sách các id ở dạng chuỗi
+  ids = ids.split(", ");// chuyển dạng chuỗi thành dạng mảng
+
+  switch (type) {
+    case "active":
+    case "inactive":// gom case
+      await Product.updateMany({
+        _id: {$in: ids} 
+        // tìm những bản ghi có id nằm trong mảng ids, $in là bên trong
+      }, {
+        status: type
+      });
+      // Tìm bản ghi có id và update status
+      break;
+  
+    default:
+      break;
+  }
   res.redirect(`back`);
 }
 

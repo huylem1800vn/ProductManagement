@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const database = require("./config/database");
 const systemConfig = require("./config/system");
 const methodOverride = require("method-override");
+const bodyParser = require('body-parser');
 dotenv.config();
 
 database.connect();
@@ -19,6 +20,10 @@ app.set("views", "./views");
 app.use(express.static('public'));
 
 app.use(methodOverride('_method'));
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// Để xét phần bodyParser được gửi lên dưới dạng form
 
 // App Locals Variable
 app.locals.prefixAdmin = systemConfig.prefixAdmin;

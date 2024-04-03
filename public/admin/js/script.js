@@ -73,3 +73,73 @@ if(listButtonChangeStauts.length > 0){
     });
 }
 // end button-change-status 
+
+// checkbox-multi 
+const checkboxMulti = document.querySelector("[checkbox-multi]");
+if(checkboxMulti) {
+    const inputCheckall = checkboxMulti.querySelector("input[name='checkall']");
+    // lấy ra các thẻ input có name là checkall
+    const listInputId = checkboxMulti.querySelectorAll("input[name='id']");
+    
+    inputCheckall.addEventListener("click", () => {
+        if(inputCheckall.checked) {
+            listInputId.forEach(input => {
+                input.checked = true;
+            })      
+        } else {
+            listInputId.forEach(input => {
+                input.checked = false;
+            })
+        } 
+        
+        
+    })
+
+    // khi tick đầy các ô ở dưới thì ô check all cũng được tick
+    // xét các ôn input có thuộc tính name=id mỗi khi tick 1 ô thì đều xét trường hợp
+    listInputId.forEach(inputId => {
+        inputId.addEventListener("click", () => {
+            const countInputIdChecked = checkboxMulti.querySelectorAll("input[name='id']:checked").length;
+            const lengthtInputId = listInputId.length;
+            //mỗi lần ô input có property name=id được tick đều chạy vào lệnh if else check một lần
+            if(countInputIdChecked == lengthtInputId) {
+                inputCheckall.checked = true;
+            }
+            else {
+                inputCheckall.checked = false;
+            }
+        })
+    })
+}
+// end checkbox-multi 
+
+// form-change-multi 
+const formChangeMulti = document.querySelector("[form-change-multi]");
+if(formChangeMulti) {
+    formChangeMulti.addEventListener("submit", (event) => {
+        // do form mặc định khi click vào nút submit sẽ link thẳng sang trang, nên phải ngăn chặn hành vi mặc định là load lại trang, rồi điền các ids cho form 
+        event.preventDefault();
+        //logic dưới đây lấy ra giá trị các ô input đã check và gắn id vào ô input có name=ids
+        const listInputIdChecked = document.querySelectorAll("input[name='id']:checked");
+        if(listInputIdChecked.length > 0) {
+            const ids = [];
+
+            listInputIdChecked.forEach(input => {
+                const id = input.value;
+                ids.push(id);
+            })
+
+            const stringIds = ids.join(", "); // chuyển từ mảng thành chuỗi
+
+            const input = formChangeMulti.querySelector("input[name='ids']");
+            input.value = stringIds;
+
+            // xử lý logic xong submit
+            formChangeMulti.submit();
+
+        } else {
+            alert("Vui lòng chọn ít nhất 1 bản ghi!");
+        }
+    });
+}
+// end form-change-multi 
