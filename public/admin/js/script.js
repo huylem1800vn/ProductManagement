@@ -120,6 +120,7 @@ if(formChangeMulti) {
         // do form mặc định khi click vào nút submit sẽ link thẳng sang trang, nên phải ngăn chặn hành vi mặc định là load lại trang, rồi điền các ids cho form 
         event.preventDefault();
         //logic dưới đây lấy ra giá trị các ô input đã check và gắn id vào ô input có name=ids
+        const type = formChangeMulti.querySelector("select[name='type']").value;
         const listInputIdChecked = document.querySelectorAll("input[name='id']:checked");
         if(listInputIdChecked.length > 0) {
             const ids = [];
@@ -134,8 +135,15 @@ if(formChangeMulti) {
             const input = formChangeMulti.querySelector("input[name='ids']");
             input.value = stringIds;
 
-            // xử lý logic xong submit
-            formChangeMulti.submit();
+            if(type == "delete-all"){
+                const isConfirm = confirm("Bạn có chắc muốn xoá những bản ghi này!");
+                if(!isConfirm){
+                    return;
+                }
+            }
+
+            formChangeMulti.submit();// xử lý logic xong submit
+            
 
         } else {
             alert("Vui lòng chọn ít nhất 1 bản ghi!");
