@@ -127,7 +127,17 @@ if(formChangeMulti) {
 
             listInputIdChecked.forEach(input => {
                 const id = input.value;
-                ids.push(id);
+
+                if(type == "change-position") {
+                    const position = input.closest("tr").querySelector("input[name='position']").value;// đi ra thẻ cha tr của thẻ hiện tại
+                    console.log(position);
+
+
+                    ids.push(`${id}-${position}`);
+                }
+                else {
+                    ids.push(id);
+                }
             })
 
             const stringIds = ids.join(", "); // chuyển từ mảng thành chuỗi
@@ -141,6 +151,9 @@ if(formChangeMulti) {
                     return;
                 }
             }
+
+            console.log(ids);
+            console.log(type);
 
             formChangeMulti.submit();// xử lý logic xong submit
             

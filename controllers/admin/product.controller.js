@@ -33,7 +33,9 @@ module.exports.index = async (req, res) => {
   const products = await Product
   .find(find)
   .limit(objectPagination.limitItems)
-  .skip(objectPagination.skip);
+  .skip(objectPagination.skip)
+  .sort({ position: "desc" });
+  // desc là giảm dần, asc mặc định là tăng dần
 
   // Chọc vào model Product trả ra tất cả các bản ghi trong database theo điều kiện, nếu không có điều kiện thì trả ra hết
 
@@ -87,6 +89,17 @@ module.exports.changeMulti = async (req, res) => {
       }, {
         deleted: true
       });
+      break;
+    case "change-position":
+      for (const item of ids) {
+        let [id, position] = item.split("-");// phá vỡ cấu trúc
+        position = parseInt(position);// vì position là kiểu number nên phải chuyển chuỗi sang number
+        await Product.updateOne({
+          _id: id
+        }, {
+          position: position
+        })
+      }
       break;
     default:
       break;
