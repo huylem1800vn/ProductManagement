@@ -64,8 +64,8 @@ module.exports.changeStatus = async (req, res) => {
 }
 
 // [PATCH] /admin/products/change-multi
+// tính năng này chấm 2 điểm
 module.exports.changeMulti = async (req, res) => {
-  console.log(req.body);
   const type = req.body.type;
   let ids = req.body.ids;// lấy danh sách các id ở dạng chuỗi
   ids = ids.split(", ");// chuyển dạng chuỗi thành dạng mảng
@@ -85,7 +85,18 @@ module.exports.changeMulti = async (req, res) => {
     default:
       break;
   }
-  res.redirect(`back`);
+  res.redirect("back");
+}
+
+// [DELETE] /admin/products/delete/:id
+module.exports.deleteItem = async (req, res) => {
+  const id = req.params.id;
+
+  await Product.deleteOne({
+    _id: id
+  });
+
+  res.redirect("back");
 }
 
   
