@@ -61,8 +61,11 @@ module.exports.changeStatus = async (req, res) => {
   }, {
     status: status
   });// Tìm bản ghi có id và update status
+
+  req.flash('success', 'Cập nhật trạng thái thành công!');
+  // khi load lại trang sẽ mất đi biến thông báo, khi dùng flash sẽ được lưu biến vào cookie một thời gian để thông báo
   
-  res.redirect(`back`);
+  res.redirect(`back`);// back về trang trước
 }
 
 // [PATCH] /admin/products/change-multi
