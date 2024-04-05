@@ -85,6 +85,7 @@ module.exports.changeMulti = async (req, res) => {
         status: type
       });
       // Tìm bản ghi có id và update status
+      req.flash('success', 'Cập nhật trạng thái thành công!');
       break;
     case "delete-all":
       await Product.updateMany({
