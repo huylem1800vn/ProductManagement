@@ -9,7 +9,12 @@ const productSchema = new mongoose.Schema({
     thumbnail: String,
     status: String,
     position: Number,
-    deleted: Boolean,
+    deleted: {
+        type: Boolean,
+        default: false
+    },
+}, {
+    timestamps: true// thêm trường createdAt với updatedAt vào db
 });
 
 const Product = mongoose.model("Product", 
