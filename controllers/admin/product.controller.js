@@ -141,6 +141,18 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
+  if(!req.body.title) {
+    req.flash("error", "Vui lòng nhập tiêu đề");
+    res.redirect("back");
+    return;
+  }
+
+  if(!req.body.title.length < 5) {
+    req.flash("error", "Vui lòng nhập ít nhất 5 ký tự");
+    res.redirect("back");
+    return;
+  }
+
   req.body.price = parseInt(req.body.price);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.stock = parseInt(req.body.stock);
@@ -154,11 +166,13 @@ module.exports.createPost = async (req, res) => {
   if(req.file){
     req.body.thumbnail = `/uploads/${req.file.filename}`;
   }
-  
-  const record = new Product(req.body);// chọc vào model product khởi tạo một bản ghi mới
-  await record.save();
 
-  req.flash("success", "Thêm mới sản phẩm thành công");
-  res.redirect(`/${systemConfig.prefixAdmin}/products`);
+  res.send("OK");
+  
+  // const record = new Product(req.body);// chọc vào model product khởi tạo một bản ghi mới
+  // await record.save();
+
+  // req.flash("success", "Thêm mới sản phẩm thành công");
+  // res.redirect(`/${systemConfig.prefixAdmin}/products`);
 }
   
