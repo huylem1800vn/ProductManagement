@@ -147,7 +147,7 @@ module.exports.createPost = async (req, res) => {
     return;
   }
 
-  if(!req.body.title.length < 5) {
+  if(req.body.title.length < 5) {
     req.flash("error", "Vui lòng nhập ít nhất 5 ký tự");
     res.redirect("back");
     return;
@@ -165,14 +165,15 @@ module.exports.createPost = async (req, res) => {
   
   if(req.file){
     req.body.thumbnail = `/uploads/${req.file.filename}`;
-  }
+  }// khi đẩy lên sever online thì thư mục public là thư mục toàn cục nên không cần phải xét vào thư mục public nữa mà vào thẳng thư mục uploads, phải lấy ra link ảnh để lưu vào database
+  // nếu có gửi lên file thì sẽ gắn link ảnh vào thumbnail `/uploads/${req.file.filename}`
 
   res.send("OK");
   
-  // const record = new Product(req.body);// chọc vào model product khởi tạo một bản ghi mới
-  // await record.save();
+  const record = new Product(req.body);// chọc vào model product khởi tạo một bản ghi mới, lưu sản phẩm vào database đầu tiên phải tạo mới 1 bản ghi, tạo một sản phẩm mới nhưng phải dựa trên trường model Product
+  await record.save(); // khởi tạo xong lưu bản ghi (record) vào database
 
-  // req.flash("success", "Thêm mới sản phẩm thành công");
-  // res.redirect(`/${systemConfig.prefixAdmin}/products`);
+  req.flash("success", "Thêm mới sản phẩm thành công");
+  res.redirect(`/${systemConfig.prefixAdmin}/products`);
 }
   

@@ -1,9 +1,9 @@
 const express = require("express");
 const multer  = require('multer');
 const router = express.Router();
+const validate = require("../../validates/admin/product.validate");
+
 const storage = require("../../helpers/storageMulter.helper");
-
-
 const upload = multer({ storage: storage });
 
 // có router phải tạo controller
@@ -21,7 +21,12 @@ router.delete("/delete/:id", controller.deleteItem);
 
 router.get("/create", controller.create);// giao diện thêm mới
 
-router.post("/create", upload.single('thumbnail'), controller.createPost);
+router.post(
+    "/create", 
+    upload.single('thumbnail'),
+    validate.createPost, 
+    controller.createPost
+    );// upload.single('thumbnail') đứng từ biến upload gọi vào hàm single, single dùng để upload 1 ảnh xử lý update file trong input có name là thumbnail
 
 module.exports = router;
 
