@@ -113,7 +113,7 @@ if(checkboxMulti) {
 }
 // end checkbox-multi 
 
-// form-change-multi 
+// form-change-multi (thay đổi nhiều trạng thái)
 const formChangeMulti = document.querySelector("[form-change-multi]");
 if(formChangeMulti) {
     formChangeMulti.addEventListener("submit", (event) => {
@@ -190,7 +190,7 @@ if(listButtonDelete.length > 0) {
 }
 // end button-delete 
 
-// show-alert
+// show-alert (hiển thị thông báo)
 const showAlert = document.querySelector("[show-alert]");
 if(showAlert) { 
     const time = parseInt(showAlert.getAttribute("data-time"));
@@ -207,3 +207,18 @@ if(showAlert) {
     }) 
 }
 // end show-alert
+
+// upload-image (xem trước (preview) ảnh)
+const uploadImage = document.querySelector("[upload-image]");
+if(uploadImage) {
+    const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
+    const uploadImagePreview = uploadImage.querySelector("[upload-image-preview]");
+
+    uploadImageInput.addEventListener("change", () => {
+        const file = uploadImageInput.files[0];
+        if(file) {
+            uploadImagePreview.src = URL.createObjectURL(file);
+        }
+    })
+}
+// End upload-image 
