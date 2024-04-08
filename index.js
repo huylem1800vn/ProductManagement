@@ -25,9 +25,11 @@ app.use(flash());
 // End Flash
 
 app.set("view engine", "pug");
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
+// ./ là đứng từ thư mục gốc
+// ${__dirname} là thư mục gốc
 
-app.use(express.static('public'));
+app.use(express.static(`${__dirname}/public`));
 
 app.use(methodOverride('_method'));
 
