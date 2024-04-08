@@ -1,10 +1,10 @@
 const Product = require("../../models/product.model");
 
-// [GET] /products/
+
 // models là folder chứa các file dùng để truy vấn các database
 // controller dùng để chọc vào model để lấy data 
 // database trong đó
-
+// [GET] /products/
 module.exports.index = async (req, res) => {
   const products = await Product
   .find({
@@ -25,3 +25,33 @@ module.exports.index = async (req, res) => {
   }
     )
   };
+
+// [GET] /products/detail/:slug
+module.exports.detail = async (req, res) => {
+  const slug = req.params.slug;
+  
+  const product = await Product.findOne({
+    slug: slug,
+    deleted: false,
+    status: "active",
+  });
+
+  if(product) {
+    res.render("client/pages/products/detail", 
+    {
+      pageTitle : "Chi tiết sản phẩm",
+      product : product
+    }
+    )
+  } else {
+    res.redirect("/");
+  }
+
+
+  };
+
+
+
+
+
+  
