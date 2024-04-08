@@ -141,17 +141,6 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
-  if(!req.body.title) {
-    req.flash("error", "Vui lòng nhập tiêu đề");
-    res.redirect("back");
-    return;
-  }
-
-  if(req.body.title.length < 5) {
-    req.flash("error", "Vui lòng nhập ít nhất 5 ký tự");
-    res.redirect("back");
-    return;
-  }
 
   req.body.price = parseInt(req.body.price);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
@@ -167,13 +156,51 @@ module.exports.createPost = async (req, res) => {
     req.body.thumbnail = `/uploads/${req.file.filename}`;
   }// khi đẩy lên sever online thì thư mục public là thư mục toàn cục nên không cần phải xét vào thư mục public nữa mà vào thẳng thư mục uploads, phải lấy ra link ảnh để lưu vào database
   // nếu có gửi lên file thì sẽ gắn link ảnh vào thumbnail `/uploads/${req.file.filename}`
-
-  res.send("OK");
   
   const record = new Product(req.body);// chọc vào model product khởi tạo một bản ghi mới, lưu sản phẩm vào database đầu tiên phải tạo mới 1 bản ghi, tạo một sản phẩm mới nhưng phải dựa trên trường model Product
   await record.save(); // khởi tạo xong lưu bản ghi (record) vào database
 
   req.flash("success", "Thêm mới sản phẩm thành công");
   res.redirect(`/${systemConfig.prefixAdmin}/products`);
+}
+
+// [GET] /admin/products/edit/:id
+module.exports.edit = async (req, res) => {
+  const id = req.params.id;
+
+  const product = await Product.findOne({
+    _id: id,
+    deleted: false,
+  })
+
+  // có thông tin vào sản phẩm product thì trả nó ra ngoài giao diện qua res.render
+  res.render("admin/pages/products/edit", {
+    pageTitle: "Chỉnh sửa sản phẩm",
+    product: product,
+  });
+}
+
+// [POST] /admin/products/edit/:id
+module.exports.editPatch = async (req, res) => {
+  const id = req.params.id;
+
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+  req.body.position = parseInt(req.body.position);
+
+  
+  if(req.file){
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
+
+  await Product.updateOne({
+    _id: id,
+    deleted: false,
+  }, req.body);
+  // bởi vì biến req.body là một Object rồi
+  
+  req.flash("success", "Cập nhật sản phẩm thành công");
+  res.redirect(`back`);
 }
   

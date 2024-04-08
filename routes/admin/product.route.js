@@ -28,6 +28,14 @@ router.post(
     controller.createPost
     );// upload.single('thumbnail') đứng từ biến upload gọi vào hàm single, single dùng để upload 1 ảnh xử lý update file trong input có name là thumbnail
 
+router.get("/edit/:id", controller.edit);
+router.patch(
+    "/edit/:id", 
+    upload.single('thumbnail'),
+    validate.createPost, 
+    controller.editPatch
+    );
+// phương thức patch là method override
 module.exports = router;
 
   

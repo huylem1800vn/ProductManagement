@@ -11,5 +11,5 @@ module.exports.createPost = (req, res, next) => {
         return;
       }
 
-      next();
-}// biến next dùng để chạy đến hàm tiếp theo
+      next();// biến next dùng để chạy đến hàm tiếp theo
+}
