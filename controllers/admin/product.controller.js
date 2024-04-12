@@ -132,6 +132,83 @@ module.exports.deleteItem = async (req, res) => {
   res.redirect("back");
 }
 
+// [POST] /admin/products/garbage
+module.exports.garbage = async (req, res) => {
+  const find = {
+    deleted: true,
+  }
+
+  // Filter tìm kiếm bằng status, gắn class active
+  const filterStatus = filterHelper(req);
+
+  if(req.query.status){
+    find.status = req.query.status // Lấy ra giá trị sau dấu ? trên URL gán vào mảng find
+  }
+  // End Filter 
+
+  // Search tìm kiếm bằng title
+  if(req.query.keyword){
+    const regex = new RegExp(req.query.keyword, "i");// không quan tâm chữ hoa hay thường
+    find.title = regex;
+  }
+  // End Search 
+  
+  // Pagination (Phân trang) 
+  const countRecords = await Product.countDocuments(find);
+  // Đếm các document(mỗi bảng ghi là 1 document)
+  const objectPagination = paginationHelper(req, countRecords);
+  // End Pagination (Phân trang) 
+
+  const products = await Product
+  .find(find)
+  .limit(objectPagination.limitItems)
+  .skip(objectPagination.skip)
+  .sort({ position: "desc" });
+  // desc là giảm dần, asc mặc định là tăng dần
+
+  // Chọc vào model Product trả ra tất cả các bản ghi trong database theo điều kiện, nếu không có điều kiện thì trả ra hết
+
+  res.render("admin/pages/products/garbage", 
+    {
+      pageTitle : "Danh sách sản phẩm",
+      products: products,
+      filterStatus: filterStatus,
+      keyword: req.query.keyword,
+      objectPagination: objectPagination,
+      prefixAdmin: systemConfig.prefixAdmin
+    }
+    )
+}
+
+// [DELETE] /admin/products/garbage/delete/:id
+module.exports.deleteItemForever = async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+
+  await Product.deleteOne({
+    _id: id
+  })
+
+  req.flash('success', 'Xoá sản phẩm vĩnh viễn thành công!');
+
+  res.redirect("back");
+}
+
+// [DELETE] /admin/products/garbage/restore/:id
+module.exports.restore = async (req, res) => {
+  const id = req.params.id;
+
+  await Product.updateOne({
+    _id: id
+  }, {
+    deleted: false
+  });
+
+  req.flash('success', 'Phục hồi sản phẩm thành công!');
+
+  res.redirect("back");
+}
+
 // [GET] /admin/products/create
 module.exports.create = async (req, res) => {
   res.render("admin/pages/products/create", {
@@ -152,10 +229,10 @@ module.exports.createPost = async (req, res) => {
     req.body.position = countProduct + 1;
   }
   
-  if(req.file){
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-  }// khi đẩy lên sever online thì thư mục public là thư mục toàn cục nên không cần phải xét vào thư mục public nữa mà vào thẳng thư mục uploads, phải lấy ra link ảnh để lưu vào database
-  // nếu có gửi lên file thì sẽ gắn link ảnh vào thumbnail `/uploads/${req.file.filename}`
+  // if(req.file){
+  //   req.body.thumbnail = `/uploads/${req.file.filename}`;
+  // }// khi đẩy lên sever online thì thư mục public là thư mục toàn cục nên không cần phải xét vào thư mục public nữa mà vào thẳng thư mục uploads, phải lấy ra link ảnh để lưu vào database
+  // // nếu có gửi lên file thì sẽ gắn link ảnh vào thumbnail `/uploads/${req.file.filename}`
   
   const record = new Product(req.body);// chọc vào model product khởi tạo một bản ghi mới, lưu sản phẩm vào database đầu tiên phải tạo mới 1 bản ghi, tạo một sản phẩm mới nhưng phải dựa trên trường model Product
   await record.save(); // khởi tạo xong lưu bản ghi (record) vào database
@@ -190,9 +267,9 @@ module.exports.editPatch = async (req, res) => {
   req.body.position = parseInt(req.body.position);
 
   
-  if(req.file){
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-  }
+  // if(req.file){
+  //   req.body.thumbnail = `/uploads/${req.file.filename}`;
+  // }
 
   await Product.updateOne({
     _id: id,
@@ -219,4 +296,6 @@ module.exports.detail = async (req, res) => {
     product: product,
   });
 }
+
+
   

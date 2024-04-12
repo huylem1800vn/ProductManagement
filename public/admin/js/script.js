@@ -190,6 +190,58 @@ if(listButtonDelete.length > 0) {
 }
 // end button-delete 
 
+// button-delete-forever
+const listButtonDeleteForever = document.querySelectorAll("[button-delete-forever]");
+if(listButtonDeleteForever.length > 0) {
+    const formDeleteItemForever = document.querySelector("[form-delete-item-forever]");
+
+    listButtonDeleteForever.forEach(button => {
+        button.addEventListener("click", () => {
+            const isConfirm = confirm("Bạn có chắc muốn xóa vĩnh viễn?");
+
+            if(isConfirm) {
+                const id = button.getAttribute("data-id");
+
+                const path = formDeleteItemForever.getAttribute("data-path");
+        
+                const action = `${path}/${id}?_method=DELETE`;
+        
+                formDeleteItemForever.action = action;
+        
+                formDeleteItemForever.submit();
+            }
+            
+        });
+    });
+}
+// end button-delete-forever 
+
+// button-restore
+const listButtonRestore = document.querySelectorAll("[button-restore]");
+if(listButtonRestore.length > 0) {
+    const formRestore = document.querySelector("[form-restore]");
+
+    listButtonRestore.forEach(button => {
+        button.addEventListener("click", () => {
+            const isConfirm = confirm("Bạn có mốn khôi phục sản phẩm?");
+
+            if(isConfirm) {
+                const id = button.getAttribute("data-id");
+
+                const path = formRestore.getAttribute("data-path");
+        
+                const action = `${path}/${id}`;
+        
+                formRestore.action = action;
+        
+                formRestore.submit();
+            }
+            
+        });
+    });
+}
+// end button-delete-forever 
+
 // show-alert (hiển thị thông báo)
 const showAlert = document.querySelector("[show-alert]");
 if(showAlert) { 
