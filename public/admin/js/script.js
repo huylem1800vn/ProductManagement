@@ -301,3 +301,24 @@ if(sort) {
     }
 }
 // End Sort
+
+// Sort Clear Button
+if(sort){
+    const sortSelect = sort.querySelector("[sort-select]");
+    const sortClearButton = sort.querySelector("[sort-clear]");
+    console.log(sortClearButton);
+    
+    let url = new URL(window.location.href);
+    sortClearButton.addEventListener("click", () => {
+        const [sortKey, sortValue] = sortSelect.value.split("-");
+            
+        if(sortKey && sortValue) {
+            url.searchParams.delete("sortKey"); 
+            url.searchParams.delete("sortValue");
+        }
+
+        window.location.href = url.href; 
+    });
+}
+// End Sort Clear Button
+
