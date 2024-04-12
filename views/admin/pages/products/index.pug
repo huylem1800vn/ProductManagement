@@ -10,7 +10,7 @@ block main
   h1(class="mb-4") Danh sách sản phẩm
   a(
     href=`/${prefixAdmin}/products/garbage`
-    class="btn btn-outline-success"
+    class="btn btn-outline-warning"
   ) Thùng rác
 
   .card.mb-3
@@ -21,6 +21,29 @@ block main
           +filter(filterStatus)
         .col-6
           +search(keyword)
+  
+  .card.mb-3
+    .card-header Sắp xếp
+    .card-body
+      .row
+        .col-4
+          div(sort)
+            select(
+              class="form-control"
+              name="sort"
+              sort-select
+            )
+              option(value="position-desc") Vị trí giảm dần
+              option(value="position-asc") Vị trí tăng dần
+              option(value="price-desc") Giá giảm dần
+              option(value="price-asc") Giá tăng dần
+              option(value="title-asc") Tiêu đề A - Z
+              option(value="title-desc") Tiêu đề Z - A
+
+            button(
+              class="btn btn-danger mt-2"
+              sort-clear
+            ) Clear
   
   .card.mb-3
     .card-header Danh sách

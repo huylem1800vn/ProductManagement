@@ -30,11 +30,24 @@ module.exports.index = async (req, res) => {
   const objectPagination = paginationHelper(req, countRecords);
   // End Pagination (Phân trang) 
 
+  // Sort
+  const sort = {};
+  if(req.query.sortKey && req.query.sortValue) {
+    const sortKey = req.query.sortKey;
+    const sortValue = req.query.sortValue;
+    sort[sortKey] = sortValue;
+    // do sortKey là một chuỗi nên phải truyền bằng sort["..."];
+  } else {
+    sort.position = "desc";
+    // sort là một Object có cặp key value là: position: "desc"
+  }
+  // End Sort
+
   const products = await Product
   .find(find)
   .limit(objectPagination.limitItems)
   .skip(objectPagination.skip)
-  .sort({ position: "desc" });
+  .sort(sort);
   // desc là giảm dần, asc mặc định là tăng dần
 
   // Chọc vào model Product trả ra tất cả các bản ghi trong database theo điều kiện, nếu không có điều kiện thì trả ra hết
