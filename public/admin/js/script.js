@@ -306,12 +306,12 @@ if(sort) {
 if(sort){
     const sortSelect = sort.querySelector("[sort-select]");
     const sortClearButton = sort.querySelector("[sort-clear]");
-    console.log(sortClearButton);
     
     let url = new URL(window.location.href);
     sortClearButton.addEventListener("click", () => {
         const [sortKey, sortValue] = sortSelect.value.split("-");
-            
+        console.log(sortKey);  
+        console.log(sortValue); 
         if(sortKey && sortValue) {
             url.searchParams.delete("sortKey"); 
             url.searchParams.delete("sortValue");
