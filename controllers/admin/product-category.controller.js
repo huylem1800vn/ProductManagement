@@ -16,8 +16,14 @@ module.exports.index = async (req, res) => {
 
 // [GET] /admin/products-category/create
 module.exports.create = async (req, res) => {
+    const records = await ProductCategory.find({
+        deleted: false,
+    });
+    console.log(records);
+
     res.render("admin/pages/products-category/create", {
         pageTitle: "Thêm mới danh mục sản phẩm",
+        records: records,
     });
 };
 
