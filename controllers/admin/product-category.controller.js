@@ -9,9 +9,11 @@ module.exports.index = async (req, res) => {
         deleted: false,
     })
     
+    const newRecords = createTreeHelper(records);
+
     res.render("admin/pages/products-category/index", {
         pageTitle: "Danh mục sản phẩm",
-        records: records,
+        records: newRecords,
     });
 };
 
@@ -44,6 +46,6 @@ module.exports.createPost = async (req, res) => {
     await record.save();
 
     req.flash("success", `Thêm mới danh mục: ${req.body.title} thành công`);
-  res.redirect(`/${systemConfig.prefixAdmin}/products-category`);
+    res.redirect(`/${systemConfig.prefixAdmin}/products-category`);
     
 };
