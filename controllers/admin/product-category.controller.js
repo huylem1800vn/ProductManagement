@@ -49,3 +49,33 @@ module.exports.createPost = async (req, res) => {
     res.redirect(`/${systemConfig.prefixAdmin}/products-category`);
     
 };
+
+// [GET] /admin/products-category/edit/:id
+module.exports.edit = async (req, res) => {
+    
+    try {
+        const find = {
+            _id: req.params.id,
+            deleted: false,
+        }
+
+        const data = await ProductCategory.findOne(find);
+
+        const records = await ProductCategory.find({ 
+            deleted: false 
+        });
+
+        const newRecords = createTreeHelper(records);
+
+        res.render("admin/pages/products-category/edit", {
+            pageTitle: "Sửa danh mục sản phẩm",
+            data: data,
+            records: newRecords,
+        });
+        
+
+    } catch (error) {
+        // để bắt lỗi truyền lại trang danh sách danh mục phòng trường hợp có người truyền lên id sai
+        res.redirect(`/${systemConfig.prefixAdmin}/products-category`);
+    }
+}
