@@ -10,7 +10,7 @@ block main
     +alert-error(5000)
 
     form(
-        action=`/${prefixAdmin}/products-category/create`
+        action=`/${prefixAdmin}/products-category/edit/${data.id}?_method=PATCH`
         method="POST"
         enctype="multipart/form-data"
     )
@@ -105,4 +105,4 @@ block main
             button(
                 type="submit"
                 class="btn btn-primary"
-            ) Tạo mới
+            ) Cập nhật
