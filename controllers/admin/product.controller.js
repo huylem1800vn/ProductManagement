@@ -266,6 +266,11 @@ module.exports.createPost = async (req, res) => {
 // [GET] /admin/products/edit/:id
 module.exports.edit = async (req, res) => {
   const id = req.params.id;
+  const category = await ProductCategory.find({
+    deleted: false,
+  });
+
+  const newCategory = createTreeHelper(category);
 
   const product = await Product.findOne({
     _id: id,
@@ -276,6 +281,7 @@ module.exports.edit = async (req, res) => {
   res.render("admin/pages/products/edit", {
     pageTitle: "Chỉnh sửa sản phẩm",
     product: product,
+    category: newCategory,
   });
 }
 
