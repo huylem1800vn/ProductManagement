@@ -219,7 +219,7 @@ module.exports.restore = async (req, res) => {
     deleted: false
   });
 
-  req.flash('success', 'Phục hồi sản phẩm thành công!');
+  req.flash('success', `Phục hồi sản phẩm: ${req.body.title}  thành công!`);
 
   res.redirect("back");
 }
@@ -259,7 +259,7 @@ module.exports.createPost = async (req, res) => {
   const record = new Product(req.body);// chọc vào model product khởi tạo một bản ghi mới, lưu sản phẩm vào database đầu tiên phải tạo mới 1 bản ghi, tạo một sản phẩm mới nhưng phải dựa trên trường model Product
   await record.save(); // khởi tạo xong lưu bản ghi (record) vào database
 
-  req.flash("success", "Thêm mới sản phẩm thành công");
+  req.flash("success", `Thêm mới sản phẩm ${req.body.title} thành công`);
   res.redirect(`/${systemConfig.prefixAdmin}/products`);
 }
 
