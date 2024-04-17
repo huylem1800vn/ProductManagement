@@ -270,6 +270,7 @@ module.exports.edit = async (req, res) => {
     deleted: false,
   });
 
+
   const newCategory = createTreeHelper(category);
 
   const product = await Product.findOne({
