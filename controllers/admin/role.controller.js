@@ -96,7 +96,7 @@ module.exports.permissionsPatch = async (req, res) => {
     // req.body là chỗi json bên frontend do req.body là giá trị của form được submit, cụ thể là giá trị role của ô input
     // convert về dạng js
     const roles = JSON.parse(req.body.roles);
-    console.log(roles);
+    // console.log(roles);
 
     for (const role of roles) {
         await Role.updateOne({
