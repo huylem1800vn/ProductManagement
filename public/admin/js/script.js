@@ -322,3 +322,82 @@ if(sort){
 }
 // End Sort Clear Button
 
+
+// Table Permissions (Phân quyền)
+const buttonSubmitPermissions = document.querySelector("[button-submit-permissions]");
+if(buttonSubmitPermissions) {
+    buttonSubmitPermissions.addEventListener("click", () => {
+        const roles = [];
+        const tablePermissions = document.querySelector("[table-permissions]");
+        const rows = tablePermissions.querySelectorAll("tbody tr[data-name]");
+        
+        rows.forEach((row, index) => {
+            // lấy giá trị thuộc tính data-name
+            const dataName = row.getAttribute("data-name");
+            // lấy giá trị ô input của hàng đó
+            const inputs = row.querySelectorAll("input");
+
+            // sau đó nếu có thẻ tr là id, thì sẽ lấy ra giá trị input của hàng đó, vì nó chứa id của các quyền
+            if(dataName == "id") {  
+                inputs.forEach((input) => {
+                    const id = input.value;
+                    // push các id vào mảng chứa object, object dưới là các object chứa id
+                    roles.push({
+                        id: id,
+                        permissions: [],
+                    });
+                })
+            } else {
+                inputs.forEach((input, index) => {
+                    // kiểm tra xin ô input nào được check
+                    const inputChecked = input.checked;
+                    if(inputChecked) {
+                        roles[index].permissions.push(dataName);
+                    }
+                    // console.log(dataName);
+                    // console.log(inputChecked)
+                    // console.log(index)
+                    // console.log("----------------------------")
+                });
+            }
+        });
+
+        if(roles.length > 0) {
+            // gán cho ô input có name="roles", một value bằng mảng roles
+            const formChangePermissions =  document.querySelector("[form-change-permissions]");
+            const inputRoles = formChangePermissions.querySelector("input[name='roles']");
+            // các ô input giá trị lưu là một chuỗi chứ không phải 1 mảng
+            // trước khi lưu vào input thì nên chuyển nó thành chuỗi (vì roles là một mảng), nên chuyển mảng thành chuỗi json
+            inputRoles.value = JSON.stringify(roles);
+            formChangePermissions.submit();
+        }
+    });
+}
+// End Table Permissions (Phân quyền)
+
+//Data default Table Permissions
+// mục đích tạo thẻ div tạo ra thuộc tính data-records=records, là để lấy ra data từ backend gửi lên giao diện rồi mới truyền qua cho frontend
+const dataRecords = document.querySelector("[data-records]");
+if(dataRecords) {
+    // lấy ra giá trị của thuộc tính data-records
+    // hiển thị data vào trong html, thì mặc định html sẽ convert thành chuỗi json, nên phải convert về thành mảng trong js
+    const records = JSON.parse(dataRecords.getAttribute("data-records"));
+    const tablePermissions = document.querySelector("[table-permissions]");
+
+    records.forEach((record, index) => {
+        const permissions = record.permissions;
+        console.log(permissions);
+        console.log(index);
+        permissions.forEach(permission => {
+            // truy vấn ra một hàng thẻ tr trong thẻ table có thuộc tính data-name giống như chuỗi đã gửi lên từ backend móc từ database
+            const row = tablePermissions.querySelector(`tr[data-name="${permission}"]`);
+            // lấy ra các thẻ input trong hàng đó và dựa theo index để xác định, truy vấn vào ô input ở vị trí thứ index
+            // const inputs = row.querySelectorAll("input");
+            // inputs[index].checked = true; 2 hàng này là cách trình bày 1
+            const input = row.querySelectorAll("input")[index];
+            input.checked = true;
+        })
+    })
+}
+//End Data default Table Permissions
+

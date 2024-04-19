@@ -59,11 +59,12 @@ module.exports.edit = async (req, res) => {
 // [PATCH] admin/roles/edit/:id
 module.exports.editPatch = async (req, res) => {
     try {
-        const role = Role.updateOne(
+        // tìm hiểu về điểm khác nhau giữa: role = await Role.updateOne
+        await Role.updateOne(
             {
                 _id: req.params.id,
             },
-            req.body,
+            req.body
         )
 
         req.flash("success", `Cập nhật nhóm quyền: ${req.body.title} thành công!`);
@@ -71,5 +72,42 @@ module.exports.editPatch = async (req, res) => {
         req.flash("error", `Cập nhật nhóm quyền: ${req.body.title} không thành công!`);
     }
 
-    res.redirect(`back`);
+    res.redirect(`/${systemConfig.prefixAdmin}/roles`);
+}
+
+// [GET] admin/roles/permissions
+module.exports.permissions = async (req, res) => {
+    // Find 
+    let find = {
+        deleted: false,
+    };
+    // End Find
+
+    const records = await Role.find(find);
+
+    res.render("admin/pages/roles/permissions", {
+        pageTitle: "Phân quyền",
+        records: records
+    })
+}
+
+// [PATCH] admin/roles/permissions
+module.exports.permissionsPatch = async (req, res) => {
+    // req.body là chỗi json bên frontend do req.body là giá trị của form được submit, cụ thể là giá trị role của ô input
+    // convert về dạng js
+    const roles = JSON.parse(req.body.roles);
+    console.log(roles);
+
+    for (const role of roles) {
+        await Role.updateOne({
+            _id: role.id,
+            deleted: false
+        }, {
+            permissions: role.permissions,
+        })
+    }
+
+    req.flash("success", "Cập nhật phân quyền thành công!");
+
+    res.redirect("back");
 }
