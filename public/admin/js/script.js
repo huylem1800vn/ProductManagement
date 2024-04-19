@@ -375,7 +375,7 @@ if(buttonSubmitPermissions) {
 }
 // End Table Permissions (Phân quyền)
 
-//Data default Table Permissions
+//Data default Table Permissions (hiển thị tick mặc định khi set trên data)
 // mục đích tạo thẻ div tạo ra thuộc tính data-records=records, là để lấy ra data từ backend gửi lên giao diện rồi mới truyền qua cho frontend
 const dataRecords = document.querySelector("[data-records]");
 if(dataRecords) {
