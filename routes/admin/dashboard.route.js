@@ -6,6 +6,6 @@ const controller = require("../../controllers/admin/dashboard.controller");
 
 router.get('/', controller.index);
 
-  module.exports = router;
+module.exports = router;
 
   
