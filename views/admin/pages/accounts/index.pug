@@ -1,6 +1,10 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
 
 block main
+  +alert-success()
+  +alert-error()
+
   h1(class="mb-4") Danh sách tài khoản
 
   .card.mb-3

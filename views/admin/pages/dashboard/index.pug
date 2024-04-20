@@ -1,4 +1,9 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
 
 block main
     h1 Trang tổng quan bên admin
+
+    +alert-error(5000)
+    +alert-success(5000)

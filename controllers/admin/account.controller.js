@@ -13,7 +13,6 @@ module.exports.index = async (req, res) => {
         deleted: false,
     };
     // End Find
-
     const records = await Account.find(find);
 
     // vòng lặp forEach không dùng được từ khoá await nên bắt buộc phải dùng for of
@@ -56,6 +55,7 @@ module.exports.createPost = async (req, res) => {
     const account = new Account(req.body);
     await account.save();
     
+    req.flash("access", "Tạo tài khoản thành công");
     res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
 }
 
@@ -80,8 +80,8 @@ module.exports.edit = async (req, res) => {
     })
     
   } catch (error) {
-    req.flash("error", "sai id tài khoản!");
-    res.redirect(`${systemConfig.prefixAdmin}/accounts`);
+    req.flash("error", "Sai id tài khoản!");
+    res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
   }
 }
 
@@ -93,17 +93,16 @@ module.exports.editPatch = async (req, res) => {
     // xoá trường password vì nếu người dùng không nhập, thì pass sẽ gửi lên db là rỗng nên phải xoá
     delete req.body.password;
   }
-
   try {
     await Account.updateOne({
       _id: req.params.id,
       deleted: false,
     }, req.body);
-    req.flash("access", "Cập nhật thành công!");
+    req.flash("success", "Cập nhật thành công!");
     res.redirect("back");
   } catch (error) {
     req.flash("error", "id không đúng!");
-    res.redirect(`${systemConfig.prefixAdmin}/accounts`);
+    res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
   }
   // console.log(req.params.id);
   // console.log(req.body);

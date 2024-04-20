@@ -40,9 +40,16 @@ module.exports.loginPost = async (req, res) => {
         return;
     }
 
-    console.log(user);
-    req.flash("access", "Đã đăng nhập");
+    // console.log(user);
+    req.flash("success", `Xin chào ${user.fullName}`);
     // lưu token lên cookie
     res.cookie("token", user.token, { expires: new Date(Date.now() + 900000), httpOnly: true });
     res.redirect(`/${systemConfig.prefixAdmin}/dashboard`);
+}
+
+// [GET] /admin/auth/logout
+module.exports.logout = async (req, res) => {
+    res.clearCookie("token");
+    req.flash("success", `Đăng xuất`);
+    res.redirect(`/${systemConfig.prefixAdmin}/auth/login`);
 }
