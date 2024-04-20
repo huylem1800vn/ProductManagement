@@ -16,6 +16,16 @@ module.exports.index = async (req, res) => {
 
     const records = await Account.find(find);
 
+    // vòng lặp forEach không dùng được từ khoá await nên bắt buộc phải dùng for of
+    for (const record of records) {
+      const role = await Role.findOne({
+        _id: record.role_id,
+        deleted: false,
+      });
+      record.roleTitle = role.title;
+    }
+    // console.log(records);
+
     res.render("admin/pages/accounts/index", {
       pageTitle : "Danh sách tài khoản",
       records: records,
@@ -40,7 +50,7 @@ module.exports.createPost = async (req, res) => {
 
     req.body.token = generateHelper.generateRandomString(30);
 
-    console.log(req.body);
+    // console.log(req.body);
 
     const account = new Account(req.body);
     await account.save();
