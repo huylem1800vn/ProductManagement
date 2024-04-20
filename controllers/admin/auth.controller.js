@@ -43,7 +43,8 @@ module.exports.loginPost = async (req, res) => {
     // console.log(user);
     req.flash("success", `Xin chào ${user.fullName}`);
     // lưu token lên cookie
-    res.cookie("token", user.token, { expires: new Date(Date.now() + 900000), httpOnly: true });
+    // res.cookie("token", user.token, { expires: new Date(Date.now() + 900000), httpOnly: true });
+    res.cookie("token", user.token);
     res.redirect(`/${systemConfig.prefixAdmin}/dashboard`);
 }
 
