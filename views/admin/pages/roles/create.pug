@@ -2,7 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 
 block main
-    if(role.permissions.includes("products-category_create"))
+    if(role.permissions.includes("roles_create"))
         h1(class="mb-4") Thêm mới nhóm quyền
 
         +alert-error()
