@@ -1,5 +1,6 @@
 const systemConfig = require("../../config/system");
 const Account = require("../../models/account.model");
+const Role = require("../../models/role.model");
 
 module.exports.requireAuth = async (req, res, next) => {
     // Kiểm tra xem có tồn tại cookie để cho người dùng đăng nhập vào trang quản trị
@@ -19,6 +20,15 @@ module.exports.requireAuth = async (req, res, next) => {
         res.redirect(`/${systemConfig.prefixAdmin}/auth/login`);
         return;
     }
+
+    const role = await Role.findOne({
+        _id: user.role_id,
+        deleted: false,
+    });
+
+    res.locals.user = user;// biến user toàn cục
+    res.locals.role = role;
+
 
 
     next();
