@@ -5,140 +5,148 @@ include ../../mixins/pagination.pug
 include ../../mixins/alert.pug
 
 block main
+  if(role.permissions.includes("products_delete"))
 
-  +alert-success()
-  
+    +alert-success()
+    +alert-error()
+    
 
-  h1(class="mb-4") Danh sách sản phẩm đã xoá
-  a(
-    href=`/${prefixAdmin}/products`
-    class="btn btn-outline-success"
-    ) Quay lại danh sách 
+    h1(class="mb-4") Danh sách sản phẩm đã xoá
+    a(
+      href=`/${prefixAdmin}/products`
+      class="btn btn-outline-success"
+      ) Quay lại danh sách 
 
-  .card.mb-3
-    .card-header Bộ lọc và Tìm kiếm
-    .card-body
-      .row
-        .col-6
-          +filter(filterStatus)
-        .col-6
-          +search(keyword)
-  
-  .card.mb-3
-    .card-header Danh sách
-    .card-body
-      .row 
-        .col-8
-          form(
-            action=`/${prefixAdmin}/products/change-multi?_method=PATCH`
-            method="POST"
-            form-change-multi
-          ) 
-            .d-flex.align-items-start
-              .form-group
-                select(name="type" class="form-control")
-                  option(value="active") Hoạt động
-                  option(value="inactive") Dừng hoạt động
-                  option(value="change-position") Thay đổi vị trí
-                  option(value="restore-all") Khôi phục tất cả
-              .form-group.d-none
-                input(
-                  type="text"
-                  name="ids"
-                  value=""
-                  class="form-control"
-                )
-              button(type="submit" class="btn btn-primary") Áp dụng
+    .card.mb-3
+      .card-header Bộ lọc và Tìm kiếm
+      .card-body
+        .row
+          .col-6
+            +filter(filterStatus)
+          .col-6
+            +search(keyword)
+    
+    .card.mb-3
+      .card-header Danh sách
+      .card-body
+        .row 
+          .col-8
+            form(
+              action=`/${prefixAdmin}/products/change-multi?_method=PATCH`
+              method="POST"
+              form-change-multi
+            ) 
+              .d-flex.align-items-start
+                .form-group
+                  select(name="type" class="form-control")
+                    option(value="active") Hoạt động
+                    option(value="inactive") Dừng hoạt động
+                    option(value="change-position") Thay đổi vị trí
+                    option(value="restore-all") Khôi phục tất cả
+                .form-group.d-none
+                  input(
+                    type="text"
+                    name="ids"
+                    value=""
+                    class="form-control"
+                  )
+                button(type="submit" class="btn btn-primary") Áp dụng
 
-      
-      table(
-        class="table table-hover table-sm"
-        checkbox-multi
-        )
-        thead
-          tr
-            td 
-              input(type="checkbox" name="checkall")
-            th STT
-            th Hình ảnh
-            th Tiêu đề
-            th Giá
-            th Vị trí
-            th Trạng thái
-            th Hành động
-
-        tbody
-          each item, index in products
+        
+        table(
+          class="table table-hover table-sm"
+          checkbox-multi
+          )
+          thead
             tr
               td 
-                input(type="checkbox" name="id" value=item.id) 
-              td #{index + 1}
-              td
-                img(
-                  src=item.thumbnail
-                  alt=item.title
-                  width="100px"
-                  height="auto"
-                )
-              td #{item.title}
-              td #{item.price}$
-              td
-                input(
-                  name="position"
-                  value=item.position
-                  type="number"
-                  style="width: 60px"
-                  min="1"
+                input(type="checkbox" name="checkall")
+              th STT
+              th Hình ảnh
+              th Tiêu đề
+              th Giá
+              th Vị trí
+              th Trạng thái
+              th Xoá bởi
+              th Hành động
+
+          tbody
+            each item, index in products
+              tr
+                td 
+                  input(type="checkbox" name="id" value=item.id) 
+                td #{index + 1}
+                td
+                  img(
+                    src=item.thumbnail
+                    alt=item.title
+                    width="100px"
+                    height="auto"
                   )
-              td
-                if(item.status == "active")
-                  a(
-                    href=`javascript:;` 
-                    button-change-status 
-                    data-id=item.id 
-                    data-status="inactive"
-                    class="badge badge-success"
-                    ) Hoạt động 
-                else 
-                  a(
-                    href=`javascript:;` 
-                    button-change-status 
-                    data-id=item.id 
-                    data-status="active"
-                    class="badge badge-danger"
-                    ) Dừng hoạt động
-              td
-                button(
-                  class="btn btn-danger btn-sm ml-1"
-                  button-delete-forever
-                  data-id=item.id
-                  ) Xóa vĩnh viễn
-                button(
-                  class="btn btn-info btn-sm ml-1"
-                  button-restore 
-                  data-id=item.id
-                  ) Khôi phục
+                td #{item.title}
+                td #{item.price}$
+                td
+                  input(
+                    name="position"
+                    value=item.position
+                    type="number"
+                    style="width: 60px"
+                    min="1"
+                    )
+                td
+                  if(item.status == "active")
+                    a(
+                      href=`javascript:;` 
+                      button-change-status 
+                      data-id=item.id 
+                      data-status="inactive"
+                      class="badge badge-success"
+                      ) Hoạt động 
+                  else 
+                    a(
+                      href=`javascript:;` 
+                      button-change-status 
+                      data-id=item.id 
+                      data-status="active"
+                      class="badge badge-danger"
+                      ) Dừng hoạt động
+                td 
+                  div #{item.deletedByFullName}
+                  div #{moment(item.deletedAt).format("DD/MM/YYYY - HH:mm")}
+                td
+                  button(
+                    class="btn btn-danger btn-sm ml-1"
+                    button-delete-forever
+                    data-id=item.id
+                    ) Xóa vĩnh viễn
+                  button(
+                    class="btn btn-info btn-sm ml-1"
+                    button-restore 
+                    data-id=item.id
+                    ) Khôi phục
 
-  +pagination(objectPagination)
+    +pagination(objectPagination)
 
-  form(
-    form-change-status
-    method="POST"
-    action=""
-    data-path=`/${prefixAdmin}/products/change-status`
-  )
+    form(
+      form-change-status
+      method="POST"
+      action=""
+      data-path=`/${prefixAdmin}/products/change-status`
+    )
 
-  form(
-    form-delete-item-forever
-    method="POST"
-    action=""
-    data-path=`/${prefixAdmin}/products/garbage/delete`
-  )
+    form(
+      form-delete-item-forever
+      method="POST"
+      action=""
+      data-path=`/${prefixAdmin}/products/garbage/delete`
+    )
 
-  form(
-    form-restore
-    method="POST"
-    action=""
-    data-path=`/${prefixAdmin}/products/garbage/restore`
-  )
+    form(
+      form-restore
+      method="POST"
+      action=""
+      data-path=`/${prefixAdmin}/products/garbage/restore`
+    )
+  else 
+    h1 Không được quyền truy cập
           

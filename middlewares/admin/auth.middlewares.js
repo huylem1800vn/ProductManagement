@@ -29,7 +29,5 @@ module.exports.requireAuth = async (req, res, next) => {
     res.locals.user = user;// biến user toàn cục
     res.locals.role = role;
 
-
-
     next();
 }

@@ -1,5 +1,6 @@
 const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
+const Account = require("../../models/account.model");
 const filterHelper = require("../../helpers/filter.helper");
 const paginationHelper = require("../../helpers/pagination.helper");
 const systemConfig = require("../../config/system");
@@ -53,6 +54,33 @@ module.exports.index = async (req, res) => {
   // desc là giảm dần, asc mặc định là tăng dần
 
   // Chọc vào model Product trả ra tất cả các bản ghi trong database theo điều kiện, nếu không có điều kiện thì trả ra hết
+
+  // hiển thị người tạo sản phẩm
+  for (const product of products) {
+    const createdBy = await Account.findOne({
+      _id: product.createdBy,
+    });
+    
+    // if và 2 toán tử 3 ngôi chức năng giống nhau, mình ghi ra để nhớ các trường hợp
+    // if(createdBy) {
+    //   product.createdByFullName = createdBy.fullName;
+    // };
+
+    // product.createdByFullName = createdBy?.fullName;
+
+    createdBy ? product.createdByFullName = createdBy.fullName : null;
+  }
+  // End hiển thị người tạo sản phẩm
+
+  // hiển thị người cập nhật phẩm
+  for (const product of products) {
+    const updatedBy = await Account.findOne({
+      _id: product.updatedBy,
+    });
+
+    updatedBy ? product.updatedByFullName = updatedBy.fullName : null;
+  }
+  // End hiển thị người cập nhật phẩm
 
   res.render("admin/pages/products/index", 
     {
@@ -110,7 +138,9 @@ module.exports.changeMulti = async (req, res) => {
       await Product.updateMany({
         _id: {$in: ids} 
       }, {
-        deleted: true
+        deleted: true,
+        deletedAt: new Date(),
+        deletedBy: res.locals.user.id,
       });
       req.flash('success', 'Xoá sản phẩm thành công!');
       break;
@@ -139,7 +169,9 @@ module.exports.deleteItem = async (req, res) => {
   await Product.updateOne({
     _id: id
   }, {
-    deleted: true
+    deleted: true,
+    deletedAt: new Date(),
+    deletedBy: res.locals.user.id,
   });
 
   req.flash('success', 'Xoá sản phẩm thành công!');
@@ -183,6 +215,16 @@ module.exports.garbage = async (req, res) => {
 
   // Chọc vào model Product trả ra tất cả các bản ghi trong database theo điều kiện, nếu không có điều kiện thì trả ra hết
 
+  // hiển thị người tạo sản phẩm
+  for (const product of products) {
+    const deletedBy = await Account.findOne({
+      _id: product.deletedBy,
+    });
+
+    deletedBy ? product.deletedByFullName = deletedBy.fullName : null;
+  }
+  // End hiển thị người tạo sản phẩm
+
   res.render("admin/pages/products/garbage", 
     {
       pageTitle : "Danh sách sản phẩm",
@@ -213,13 +255,14 @@ module.exports.deleteItemForever = async (req, res) => {
 module.exports.restore = async (req, res) => {
   const id = req.params.id;
 
+  const product = await Product.findOne({_id: id});
   await Product.updateOne({
     _id: id
   }, {
     deleted: false
   });
 
-  req.flash('success', `Phục hồi sản phẩm: ${req.body.title}  thành công!`);
+  req.flash('success', `Phục hồi sản phẩm: ${product.title}  thành công!`);
 
   res.redirect("back");
 }
@@ -250,11 +293,14 @@ module.exports.createPost = async (req, res) => {
     const countProduct = await Product.countDocuments();// Đếm tổng số bản ghi trong database 
     req.body.position = countProduct + 1;
   }
+
+  req.body.createdBy = res.locals.user.id;
   
+  // khi đẩy lên sever online thì thư mục public là thư mục toàn cục nên không cần phải xét vào thư mục public nữa mà vào thẳng thư mục uploads, phải lấy ra link ảnh để lưu vào database
+  // nếu có gửi lên file thì sẽ gắn link ảnh vào thumbnail `/uploads/${req.file.filename}`
   // if(req.file){
   //   req.body.thumbnail = `/uploads/${req.file.filename}`;
-  // }// khi đẩy lên sever online thì thư mục public là thư mục toàn cục nên không cần phải xét vào thư mục public nữa mà vào thẳng thư mục uploads, phải lấy ra link ảnh để lưu vào database
-  // // nếu có gửi lên file thì sẽ gắn link ảnh vào thumbnail `/uploads/${req.file.filename}`
+  // }
   
   const record = new Product(req.body);// chọc vào model product khởi tạo một bản ghi mới, lưu sản phẩm vào database đầu tiên phải tạo mới 1 bản ghi, tạo một sản phẩm mới nhưng phải dựa trên trường model Product
   await record.save(); // khởi tạo xong lưu bản ghi (record) vào database
@@ -294,6 +340,7 @@ module.exports.editPatch = async (req, res) => {
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.stock = parseInt(req.body.stock);
   req.body.position = parseInt(req.body.position);
+  req.body.updatedBy = res.locals.user.id;
 
   
   // if(req.file){

@@ -9,10 +9,11 @@ block main
     +alert-success()
 
     h1(class="mb-4") Danh sách sản phẩm
-    a(
-      href=`/${prefixAdmin}/products/garbage`
-      class="btn btn-outline-warning"
-    ) Thùng rác
+    if(role.permissions.includes("products_delete"))
+      a(
+        href=`/${prefixAdmin}/products/garbage`
+        class="btn btn-outline-warning"
+      ) Thùng rác
 
     .card.mb-3
       .card-header Bộ lọc và Tìm kiếm
@@ -93,6 +94,8 @@ block main
               th Giá
               th Vị trí
               th Trạng thái
+              th Tạo bởi
+              th Cập nhật bởi
               th Hành động
 
           tbody
@@ -135,6 +138,12 @@ block main
                       data-status="active"
                       class="badge badge-danger"
                       ) Dừng hoạt động
+                td 
+                  div #{item.createdByFullName}
+                  div #{moment(item.createdAt).format("DD/MM/YYYY - HH:mm")}
+                td 
+                  div #{item.updatedByFullName}
+                  div #{moment(item.updatedAt).format("DD/MM/YYYY - HH:mm")}
                 td
                   if(role.permissions.includes("products_edit"))
                     a(
