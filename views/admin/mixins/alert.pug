@@ -7,9 +7,10 @@ mixin alert-success()
       ) 
       | #{messages.success}
       button(
-        class="btn btn-danger btn-sm"
+        class="btn btn-sm fa-solid fa-circle-xmark fa-lg"
         close-alert
-        ) x
+        )
+
 
 mixin alert-error()
   - if (messages.error)
@@ -20,6 +21,6 @@ mixin alert-error()
       ) 
       | #{messages.error}
       button(
-        class="btn btn-danger btn-sm"
+        class="btn btn-sm fa-solid fa-circle-xmark fa-lg"
         close-alert
-        ) x
+        ) 

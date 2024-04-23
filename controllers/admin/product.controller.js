@@ -240,7 +240,6 @@ module.exports.garbage = async (req, res) => {
 // [DELETE] /admin/products/garbage/delete/:id
 module.exports.deleteItemForever = async (req, res) => {
   const id = req.params.id;
-  console.log(id);
 
   await Product.deleteOne({
     _id: id
