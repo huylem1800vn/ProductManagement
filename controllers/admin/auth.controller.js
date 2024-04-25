@@ -52,6 +52,6 @@ module.exports.loginPost = async (req, res) => {
 // [GET] /admin/auth/logout
 module.exports.logout = async (req, res) => {
     res.clearCookie("token");
-    req.flash("success", `Đăng xuất`);
+    req.flash("success", `Đã đăng xuất`);
     res.redirect(`/${systemConfig.prefixAdmin}/auth/login`);
 }

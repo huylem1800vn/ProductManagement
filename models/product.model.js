@@ -25,6 +25,10 @@ const productSchema = new mongoose.Schema({
     deletedBy: String,
     createdBy: String,
     updatedBy: String,
+    featured: {
+        type: String,
+        default: "0",
+    }
 }, {
     timestamps: true// thêm trường createdAt với updatedAt vào db
 });

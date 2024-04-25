@@ -340,7 +340,6 @@ module.exports.editPatch = async (req, res) => {
   req.body.stock = parseInt(req.body.stock);
   req.body.position = parseInt(req.body.position);
   req.body.updatedBy = res.locals.user.id;
-
   
   // if(req.file){
   //   req.body.thumbnail = `/uploads/${req.file.filename}`;
