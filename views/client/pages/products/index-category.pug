@@ -5,8 +5,10 @@ block main
   .container.my-3
     .row
       .col-12
-        +box-head("Danh sách sản phẩm")
-          
+        if(products.length > 0)
+          +box-head(`Danh sách ${category.title}`)
+        else 
+          +box-head("Danh sách sản phẩm")
 
     .row
       each item in products

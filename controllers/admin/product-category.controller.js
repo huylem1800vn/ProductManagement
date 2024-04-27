@@ -23,6 +23,8 @@ module.exports.create = async (req, res) => {
         deleted: false,
     });
 
+    // console.log(records);
+
     const newRecords = createTreeHelper(records);// tạo ra cây lồng nhau
 
     // console.log(newRecords);
