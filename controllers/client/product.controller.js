@@ -38,8 +38,37 @@ module.exports.category = async (req, res) => {
     status: "active",
   })
 
+  const getSubCategory = async (parent_id) => {
+    let allSubs = [];
+
+    const listSub = await ProductCategory.find({
+      parent_id: parent_id,
+      deleted: false,
+      status: "active",
+    }).select("id title");
+
+    allSubs = [...listSub];
+
+    for (const sub of listSub) {
+      const childs = await getSubCategory(sub.id);
+      allSubs = allSubs.concat(childs);
+    }
+
+    return allSubs;
+  };
+
+  // do hàm getSubCategory là hàm lấy data có tính chất chờ đợi nên ta phải dùng await
+  const listSubCategory = await getSubCategory(category.id);
+  const listIdSubCategory = listSubCategory.map(item => item.id);
+
+  // console.log(listSubCategory)
+  // console.log(listIdSubCategory)
+
+  // tìm và trả ra các sản phẩm trong danh mục con nếu ng dùng chỉ truy cập vào danh mục cha
   const products = await Product.find({
-    product_category_id: category.id,
+    // { $in:[category.id] } tìm ở trong một mảng
+    // cú pháp script syntax ...listIdSubCategoryId
+    product_category_id: { $in:[ category.id, ...listIdSubCategory] },
     deleted: false,
     status: "active",
   }).sort({ position: "desc" });
