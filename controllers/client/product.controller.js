@@ -96,13 +96,20 @@ module.exports.detail = async (req, res) => {
     status: "active",
   });
 
-  const category = await ProductCategory.findOne({
-    _id: product.product_category_id,
-    deleted: false,
-    status: "active",
-  })
-  product.category = category;
-
+  if (product.product_category_id) {
+    category = await ProductCategory.findOne({
+      _id: product.product_category_id,
+      deleted: false,
+      status: "active",
+    })
+    if (category) {
+      product.category = category;
+    };
+  };
+  
+  
+ 
+    
   product.priceNew = (product.price * (100 - product.discountPercentage)/100).toFixed(0);
 
   if(product) {
@@ -114,13 +121,4 @@ module.exports.detail = async (req, res) => {
     )
   } else {
     res.redirect("/");
-  }
-
-
-  };
-
-
-
-
-
-  
+  }};  
