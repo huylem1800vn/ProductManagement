@@ -9,6 +9,13 @@ module.exports.cart = async (req, res, next) => {
 
         // Trả về cookie một biến cartId: cart.id
         res.cookie("cartId", cart.id);
+    } else {
+        const cart = await Cart.findOne({
+            _id: req.cookies.cartId,
+        });
+        console.log(cart);
+        // trả ra một biến miniCart ra locals để tất cả các trang có chạy qua middleware này đều lấy được
+        res.locals.miniCart = cart;
     }
     
 
