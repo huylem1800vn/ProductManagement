@@ -310,8 +310,8 @@ if(sort){
     let url = new URL(window.location.href);
     sortClearButton.addEventListener("click", () => {
         const [sortKey, sortValue] = sortSelect.value.split("-");
-        console.log(sortKey);  
-        console.log(sortValue); 
+        // console.log(sortKey);  
+        // console.log(sortValue); 
         if(sortKey && sortValue) {
             url.searchParams.delete("sortKey"); 
             url.searchParams.delete("sortValue");
@@ -386,8 +386,8 @@ if(dataRecords) {
 
     records.forEach((record, index) => {
         const permissions = record.permissions;
-        console.log(permissions);
-        console.log(index);
+        // console.log(permissions);
+        // console.log(index);
         permissions.forEach(permission => {
             // truy vấn ra một hàng thẻ tr trong thẻ table có thuộc tính data-name giống như chuỗi đã gửi lên từ backend móc từ database
             const row = tablePermissions.querySelector(`tr[data-name="${permission}"]`);
