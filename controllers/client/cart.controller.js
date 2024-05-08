@@ -104,3 +104,28 @@ module.exports.deleteItem = async (req, res) => {
 
     res.redirect("back");
 }
+
+// [GET] /update/:productId/:quantity
+module.exports.updateItem = async (req, res) => {
+    const productId = req.params.productId;
+    const quantity = parseInt(req.params.quantity);
+    const cartId = req.cookies.cartId;
+    
+    try {
+        await Cart.updateOne({
+            _id: cartId,
+            "products.product_id": productId,
+        }, {
+            // set lại trường quantity, cú pháp mongoose
+            $set: { "products.$.quantity": quantity }
+        });
+    
+        req.flash ("success", `Cập nhật sản phẩm thành công!`);
+    
+        res.redirect("back");
+    } catch (error) {
+        req.flash ("error", `Cập nhật sản phẩm không thành công!`);
+    
+        res.redirect("back");
+    }
+}

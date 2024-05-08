@@ -9,6 +9,8 @@ router.get('/', controller.index);
 
 router.get('/delete/:productId', controller.deleteItem);
 
+router.get('/update/:productId/:quantity', controller.updateItem);
+
 module.exports = router;
 
   
