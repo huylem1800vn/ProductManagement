@@ -6,11 +6,16 @@ const checkoutRoutes = require("./checkout.route");
 const userRoutes = require("./user.route");
 const categoryMiddleware = require("../../middlewares/client/category.middleware");
 const cartMiddleware = require("../../middlewares/client/cart.middleware");
+const userMiddleware = require("../../middlewares/client/user.middleware");
 
 module.exports = (app) => {
     // để tất cả các trang đều chạy qua middleware này
     app.use(categoryMiddleware.category);
 
+    // để tất cả các trang đều chạy qua middleware này
+    app.use(userMiddleware.infoUser);
+
+    // để tất cả các trang đều chạy qua middleware này
     app.use(cartMiddleware.cart);
 
     app.use('/', homeRoutes);
