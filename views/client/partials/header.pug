@@ -36,6 +36,9 @@ header.header
               a(href="/products") Sản phẩm
               +sub-menu(layoutProductCategory)
             li 
-              a(href="/cart") 
+              a(href="/cart") Giỏ hàng
                 i(class="fa-solid fa-cart-shopping")
-                | Giỏ hàng (#{miniCart ? miniCart.products.length : 0})
+                | (#{miniCart ? miniCart.products.length : 0})
+            li 
+              a(href="/user/register") Đăng ký 
+                i(class="fa-solid fa-right-to-bracket")
