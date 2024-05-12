@@ -1,8 +1,10 @@
 const md5 = require("md5");
 const Product = require("../../models/product.model");
 const User = require("../../models/user.model");
-const generateHelper = require("../../helpers/generate.helper");
 const ForgotPassword = require("../../models/forgot-password.model");
+
+const generateHelper = require("../../helpers/generate.helper");
+const sendEmailHelper = require("../../helpers/sendEmail.helper");
 
 // [GET] /user/register
 module.exports.register = async (req, res) => {
@@ -113,18 +115,34 @@ module.exports.forgotPasswordPost = async (req, res) => {
     }
 
     // Bước 1: Tạo mã OTP và lưu vào database
+    // tạo chuỗi OTP gồm 6 số
+    const otp = generateHelper.generateRandomNumber(6);
     const objectForgotPassword = {
         email: email,
-        // tạo chuỗi OTP gồm 6 số
-        otp: generateHelper.generateRandomNumber(6),
+        otp: otp,
         // 3*60*1000 là 3 phút đc quy ra đơn vị
         expireAt: Date.now() + 3*60*1000,
-    }
+    };
+    console.log(objectForgotPassword);
     
     const forgotPassword = new ForgotPassword(objectForgotPassword);
     await forgotPassword.save();
 
     // Bước 2: Gửi mã OTP qua email
+    const subject = "Password Reset OTP Verification";
+    const text = `Dear ${user.fullName},
+
+    You recently requested to reset your password for your account. Please use the following One-Time Password (OTP) to verify your identity and complete the password reset process:
+    
+    OTP Code: ${otp}
+    
+    This OTP is valid for a limited time and should be used immediately. If you did not request a password reset, please ignore this email.
+    
+    Thank you for using our services.
+    
+    Best regards,
+    HMH Company`;
+    sendEmailHelper.sendEmail(email, subject, text);
 
     // xử dụng query ?email=${email} để biết mã otp nhập dành cho email nào
     res.redirect(`/user/password/otp?email=${email}`);
