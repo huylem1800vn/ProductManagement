@@ -2,9 +2,11 @@ const md5 = require("md5");
 const Product = require("../../models/product.model");
 const User = require("../../models/user.model");
 const ForgotPassword = require("../../models/forgot-password.model");
+const cart = require("../../models/cart.model");
 
 const generateHelper = require("../../helpers/generate.helper");
 const sendEmailHelper = require("../../helpers/sendEmail.helper");
+const Cart = require("../../models/cart.model");
 
 // [GET] /user/register
 module.exports.register = async (req, res) => {
@@ -77,9 +79,15 @@ module.exports.loginPost = async (req, res) => {
         return;
     }
 
-    req.flash("success", "Đăng nhập thành công");
+    await Cart.updateOne({
+        _id: req.cookies.cartId,
+    }, {
+        user_id: user.id,
+    })
 
     res.cookie("tokenUser", user.tokenUser);
+
+    req.flash("success", "Đăng nhập thành công");
 
     res.redirect("/");
 }
