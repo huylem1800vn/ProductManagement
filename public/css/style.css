@@ -1,14 +1,27 @@
+.inner-content .inner-title a {
+  color: #000; /* Chuyển màu chữ thành đen */
+  font-weight: 600;
+}
+
+.inner-content .inner-title a:hover {
+  color: #409fdf; /* Đổi màu chữ khi di chuột */
+  transform: scale(1.1); /* Phóng to chữ khi di chuột */
+  transition: color 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển màu và di chuyển */
+}
+
 /* Header */
 .header {
   border-bottom: 1px solid #ddd;
   padding: 10px 0;
 }
 
+/* Logo style */
 .header .inner-logo img {
-  max-height: 50px;
-  max-width: 100%;
+  max-height: 70px; /* Tăng kích thước chiều cao tối đa */
+  max-width: auto; /* Giữ tỉ lệ chiều rộng */
 }
 
+/* Menu */
 .header .inner-menu > ul {
   list-style: none;
   padding: 0;
@@ -16,11 +29,222 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-    flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .header .inner-menu > ul > li {
   margin-left: 20px;
+  position: relative;
+}
+
+/* Link style */
+.header .inner-menu > ul > li > a {
+  color: #000; /* Chuyển màu chữ thành đen */
+  font-weight: 600;
+  transition: color 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển màu và di chuyển */
+}
+
+.header .inner-menu > ul > li > a:hover {
+  color: #409fdf; /* Đổi màu chữ khi di chuột */
+  transform: scale(1.1); /* Phóng to chữ khi di chuột */
+}
+
+/* Search form */
+.header form .form-control {
+  border-radius: 50px; /* Bo góc */
+  border: 1px solid #ccc;
+  padding: 5px 15px;
+  margin-right: 10px;
+}
+
+.header form .btn {
+  border-radius: 50px; /* Bo góc */
+  padding: 5px 15px;
+  background: #f0f0f0;
+  color: #4a4a4a;
+  border: 1px solid #ccc;
+}
+
+.header form .btn:hover {
+  background: #4a4a4a;
+  color: #f0f0f0;
+}
+
+/* Sub-menu */
+.sub-menu {
+  position: relative;
+  z-index: 999;
+}
+
+.sub-menu ul {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #333333; /* Đổi màu nền thành màu trầm hơn */
+  min-width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sub-menu ul li {
+  padding: 10px;
+  border-bottom: 1px solid #444444; /* Đổi màu viền thành màu trầm hơn */
+  transition: background 0.3s ease;
+}
+
+.sub-menu ul li:last-child {
+  border-bottom: none;
+}
+
+.sub-menu ul li:hover {
+  background: #444444;
+}
+
+.sub-menu ul li a {
+  color: #f0f0f0; /* Đổi màu chữ thành trắng nhạt */
+  text-decoration: none;
+  display: block;
+}
+
+.sub-menu ul li a:hover {
+  color: #ffd700;
+}
+
+.sub-menu ul li ul {
+  right: 100%;
+  top: 0;
+  background: #333333; /* Đảm bảo nền đồng nhất */
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sub-menu:hover > ul,
+.sub-menu ul li:hover > ul {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.sub-menu ul li ul {
+  margin-left: -5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sub-menu-item {
+  position: relative;
+}
+
+.sub-menu-item > a::after {
+  content: '›';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #ccc;
+}
+
+.sub-menu-item:hover > a::after {
+  color: #ffd700;
+}
+/* End Header */
+
+/* Sub-menu */
+.sub-menu {
+  position: relative;
+  z-index: 999;
+}
+
+.sub-menu ul {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: white;
+  min-width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sub-menu ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  transition: background 0.3s ease;
+}
+
+.sub-menu ul li:last-child {
+  border-bottom: none;
+}
+
+.sub-menu ul li:hover {
+  background: #f1f1f1;
+}
+
+.sub-menu ul li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+}
+
+.sub-menu ul li a:hover {
+  color: #007bff;
+}
+
+.sub-menu ul li ul {
+  right: 100%;
+  top: 0;
+  background: white;
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sub-menu:hover > ul,
+.sub-menu ul li:hover > ul {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.sub-menu ul li ul {
+  margin-left: -5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sub-menu-item {
+  position: relative;
+}
+
+.sub-menu-item > a::after {
+  content: '›';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #999;
+}
+
+.sub-menu-item:hover > a::after {
+  color: #007bff;
 }
 /* End Header */
 
@@ -99,43 +323,104 @@
 /* End product-item */
 
 /* sub-menu */
+/* Thiết lập vị trí và z-index để đảm bảo submenu hiển thị đúng */
 .sub-menu {
-position: relative;
-z-index: 999;
+  position: relative;
+  z-index: 999;
 }
 
+/* Thiết lập kiểu cho ul trong sub-menu */
 .sub-menu ul {
-position: absolute;
-right: 0;
-top: 100%;
-list-style: none;
-padding: 0;
-margin: 0;
-background: #eae9e9;
-min-width: 180px;
-display: none;
+  position: absolute; /* Đặt vị trí tuyệt đối để submenu nằm bên dưới mục chính */
+  right: 0; /* Canh phải */
+  top: 100%; /* Canh dưới */
+  list-style: none; /* Loại bỏ dấu đầu dòng */
+  padding: 0;
+  margin: 0;
+  background: #f9f9f9; /* Đổi màu nền */
+  min-width: 200px; /* Tăng chiều rộng tối thiểu */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ */
+  border-radius: 8px; /* Thêm bo góc */
+  opacity: 0; /* Bắt đầu với submenu ẩn */
+  visibility: hidden; /* Đảm bảo submenu bị ẩn */
+  transform: translateY(-20px); /* Di chuyển submenu lên ban đầu */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển tiếp */
 }
 
+/* Thiết lập kiểu cho từng li trong submenu */
 .sub-menu ul li {
-padding: 10px;
-border-bottom: 1px solid #ddd;
+  padding: 10px; /* Thêm khoảng đệm */
+  border-bottom: 1px solid #ddd; /* Thêm đường viền dưới */
+  transition: background 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
 }
 
-.sub-menu:hover > ul {
-display: block;
+/* Loại bỏ đường viền cho mục cuối cùng */
+.sub-menu ul li:last-child {
+  border-bottom: none;
 }
 
-.sub-menu ul li {
-position: relative;
+/* Thay đổi màu nền khi di chuột vào từng mục */
+.sub-menu ul li:hover {
+  background: #f1f1f1;
 }
 
+/* Thiết lập kiểu cho liên kết trong submenu */
+.sub-menu ul li a {
+  color: #333; /* Đổi màu chữ */
+  text-decoration: none; /* Loại bỏ gạch chân */
+  display: block; /* Hiển thị liên kết dưới dạng block để dễ click */
+}
+
+/* Thay đổi màu chữ khi di chuột vào liên kết */
+.sub-menu ul li a:hover {
+  color: #007bff;
+}
+
+/* Thiết lập kiểu cho ul con trong submenu */
 .sub-menu ul li ul {
-right: 100%;
-top: 0;
+  right: 100%; /* Canh phải cho submenu con */
+  top: 0;
+  background: #f9f9f9; /* Đảm bảo nền đồng nhất */
+  border-radius: 8px; /* Thêm bo góc */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+/* Hiển thị submenu khi di chuột vào mục chính hoặc mục con */
+.sub-menu:hover > ul,
 .sub-menu ul li:hover > ul {
-display: block;
+  opacity: 1; /* Hiển thị submenu */
+  visibility: visible; /* Đảm bảo submenu hiển thị */
+  transform: translateY(0); /* Di chuyển submenu về vị trí ban đầu */
+}
+
+/* Thêm khoảng cách nhỏ bên trái cho submenu con */
+.sub-menu ul li ul {
+  margin-left: -5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Thêm chỉ báo cho submenu con */
+.sub-menu-item {
+  position: relative;
+}
+
+/* Thêm mũi tên chỉ báo submenu con */
+.sub-menu-item > a::after {
+  content: '›'; /* Biểu tượng mũi tên phải */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #999;
+}
+
+/* Thay đổi màu mũi tên khi di chuột vào mục */
+.sub-menu-item:hover > a::after {
+  color: #007bff;
 }
 /* End sub-menu */
 

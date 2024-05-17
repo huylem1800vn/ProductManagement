@@ -1,0 +1,346 @@
+/* Header */
+.header {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.header .inner-logo img {
+  max-height: 50px;
+  max-width: 100%;
+}
+
+.header .inner-menu > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.header .inner-menu > ul > li {
+  margin-left: 20px;
+}
+/* End Header */
+
+/* Footer */
+.footer {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+/* End Footer */
+
+/* box-head */
+.box-head {
+  margin-bottom: 30px;
+}
+
+.box-head .inner-title {
+  margin-bottom: 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: green;
+}
+/* End box-head */
+
+/* product-item */
+.product-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-item .inner-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-item .inner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-item .inner-content {
+  padding: 15px;
+}
+
+.product-item .inner-content .inner-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.product-item .inner-content .inner-price-new {
+  font-size: 18px;
+  font-weight: 600;
+  color: green;
+}
+
+.product-item .inner-content .inner-price-old {
+  font-size: 18px;
+  font-weight: 600;
+  color: red;
+    text-decoration: line-through;
+}
+
+.product-item .inner-content .inner-discount {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: red;
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 8px;
+}
+/* End product-item */
+
+/* sub-menu */
+.sub-menu {
+  position: relative;
+  z-index: 999;
+}
+
+.sub-menu ul {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #eae9e9;
+  min-width: 180px;
+  display: none;
+}
+
+.sub-menu ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.sub-menu:hover > ul {
+  display: block;
+}
+
+.sub-menu ul li {
+  position: relative;
+}
+
+.sub-menu ul li ul {
+  right: 100%;
+  top: 0;
+}
+
+.sub-menu ul li:hover > ul {
+  display: block;
+}
+/* End sub-menu */
+
+/* product-detail */
+.product-detail .inner-thumb img {
+width: 100%;
+height: auto;
+}
+
+.product-detail .inner-title {
+font-size: 32px;
+margin-bottom: 15px;
+}
+
+.product-detail .inner-category {
+margin-bottom: 10px;
+}
+
+.product-detail .inner-price-new {
+color: green;
+font-weight: 600;
+font-size: 24px;
+margin-bottom: 10px;
+}
+
+.product-detail .inner-price-old {
+color: red;
+font-weight: 600;
+font-size: 20px;
+text-decoration: line-through;
+margin-bottom: 10px;
+}
+
+.product-detail .inner-percent {
+margin-bottom: 10px;
+}
+
+.product-detail .inner-percent span {
+color: #fff;
+background: red;
+font-weight: 600;
+display: inline-block;
+padding: 3px 6px;
+border-radius: 8px;
+}
+
+.product-detail .inner-stock {
+margin-bottom: 10px;
+}
+
+.product-detail .inner-stock span {
+color: #fff;
+background: green;
+font-weight: 600;
+display: inline-block;
+padding: 3px 6px;
+border-radius: 8px;
+}
+
+.product-detail .inner-desc img {
+max-width: 100%;
+}
+
+.product-detail .inner-desc img {
+max-width: 100%;
+}
+/* End product-detail */
+
+a {
+text-decoration: none; /* Loại bỏ dấu gạch chân */
+}
+
+/* Show Alert */
+[show-alert] {
+position: fixed;
+top: 70px;
+right: 15px;
+z-index: 9999;
+}
+/* z-index để cao hơn các phần tử khác không bị phần tử khác đè lên */
+
+[show-alert].alert-hidden {
+animation-name: alert-hidden;
+animation-duration: 0.5s;
+animation-fill-mode: both;
+}
+
+@keyframes alert-hidden {
+from {
+  right: 15px;
+}
+to {
+  right: -100%;
+  display: none;
+}
+}
+/* End Show Alert */
+
+/* sub-menu */
+/* Thiết lập vị trí và z-index để đảm bảo submenu hiển thị đúng */
+.sub-menu {
+  position: relative;
+  z-index: 999;
+}
+
+/* Thiết lập kiểu cho ul trong sub-menu */
+.sub-menu ul {
+  position: absolute; /* Đặt vị trí tuyệt đối để submenu nằm bên dưới mục chính */
+  right: 0; /* Canh phải */
+  top: 100%; /* Canh dưới */
+  list-style: none; /* Loại bỏ dấu đầu dòng */
+  padding: 0;
+  margin: 0;
+  background: linear-gradient(135deg, #f9f9f9, #e9e9e9); /* Thêm hiệu ứng gradient */
+  min-width: 200px; /* Tăng chiều rộng tối thiểu */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ */
+  border-radius: 8px; /* Thêm bo góc */
+  opacity: 0; /* Bắt đầu với submenu ẩn */
+  visibility: hidden; /* Đảm bảo submenu bị ẩn */
+  transform: translateY(-20px); /* Di chuyển submenu lên ban đầu */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển tiếp */
+}
+
+/* Thiết lập kiểu cho từng li trong submenu */
+.sub-menu ul li {
+  padding: 10px; /* Thêm khoảng đệm */
+  border-bottom: 1px solid #ddd; /* Thêm đường viền dưới */
+  transition: background 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+}
+
+/* Loại bỏ đường viền cho mục cuối cùng */
+.sub-menu ul li:last-child {
+  border-bottom: none;
+}
+
+/* Thay đổi màu nền khi di chuột vào từng mục */
+.sub-menu ul li:hover {
+  background: #e1e1e1;
+  transform: translateX(10px); /* Hiệu ứng nổi lên khi di chuột */
+}
+
+/* Thiết lập kiểu cho liên kết trong submenu */
+.sub-menu ul li a {
+  color: #333; /* Đổi màu chữ */
+  text-decoration: none; /* Loại bỏ gạch chân */
+  display: flex; /* Hiển thị liên kết dưới dạng flex */
+  align-items: center; /* Căn giữa các mục trong flex */
+}
+
+/* Thay đổi màu chữ khi di chuột vào liên kết */
+.sub-menu ul li a:hover {
+  color: #007bff;
+}
+
+/* Thêm biểu tượng vào các mục menu */
+.sub-menu ul li a::before {
+  content: '•'; /* Biểu tượng trước mục menu */
+  margin-right: 10px; /* Khoảng cách giữa biểu tượng và văn bản */
+  color: #007bff; /* Màu của biểu tượng */
+}
+
+/* Thiết lập kiểu cho ul con trong submenu */
+.sub-menu ul li ul {
+  right: 100%; /* Canh phải cho submenu con */
+  top: 0;
+  background: linear-gradient(135deg, #f9f9f9, #e9e9e9); /* Đảm bảo nền đồng nhất */
+  border-radius: 8px; /* Thêm bo góc */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hiển thị submenu khi di chuột vào mục chính hoặc mục con */
+.sub-menu:hover > ul,
+.sub-menu ul li:hover > ul {
+  opacity: 1; /* Hiển thị submenu */
+  visibility: visible; /* Đảm bảo submenu hiển thị */
+  transform: translateY(0); /* Di chuyển submenu về vị trí ban đầu */
+}
+
+/* Thêm khoảng cách nhỏ bên trái cho submenu con */
+.sub-menu ul li ul {
+  margin-left: -5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Thêm chỉ báo cho submenu con */
+.sub-menu-item {
+  position: relative;
+}
+
+/* Thêm mũi tên chỉ báo submenu con */
+.sub-menu-item > a::after {
+  content: '›'; /* Biểu tượng mũi tên phải */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #999;
+}
+
+/* Thay đổi màu mũi tên khi di chuột vào mục */
+.sub-menu-item:hover > a::after {
+  color: #007bff;
+}
+/* End sub-menu */
