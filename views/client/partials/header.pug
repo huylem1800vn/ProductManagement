@@ -26,8 +26,8 @@ header.header
               class="btn btn-primary"
             ) 
               i.fa-solid.fa-magnifying-glass
-      
-      .col-4
+
+      .col-4.d-flex.justify-content-end
         .inner-menu
           ul
             li
@@ -41,13 +41,12 @@ header.header
                 | (#{miniCart ? miniCart.products.length : 0})
             if(user)
               li 
-              a(href="/user/info") #{user.fullName}
+                a(href="/user/info") #{user.fullName}
               li 
-              a(href="/user/logout") Đăng Xuất
+                a(href="/user/logout") Đăng Xuất
             else 
               li 
                 a(href="/user/register") Đăng ký
               li 
                 a(href="/user/login") Đăng nhập
                   i(class="fa-solid fa-right-to-bracket")
-            
