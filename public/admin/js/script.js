@@ -213,6 +213,39 @@ if(listButtonDelete.length > 0) {
 }
 // end button-delete 
 
+// button delete account
+document.addEventListener("DOMContentLoaded", () => {
+    const deleteButtons = document.querySelectorAll("button[delete-account]");
+  
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", async (event) => {
+        const accountId = button.getAttribute("data-id");
+  
+        if (confirm("Bạn có chắc chắn muốn xóa tài khoản này không?")) {
+          try {
+            const response = await fetch(`/admin/accounts/delete/${accountId}`, {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+            });
+  
+            if (response.ok) {
+              alert("Xóa tài khoản thành công!");
+              // Xóa dòng khỏi bảng
+              button.closest("tr").remove();
+            } else {
+              const result = await response.json();
+              alert(result.message || "Có lỗi xảy ra, vui lòng thử lại.");
+            }
+          } catch (error) {
+            console.error("Error deleting account:", error);
+            alert("Không thể xóa tài khoản, vui lòng thử lại.");
+          }
+        }
+      });
+    });
+  });
+// end button delete account
+
 // button-delete-forever
 const listButtonDeleteForever = document.querySelectorAll("[button-delete-forever]");
 if(listButtonDeleteForever.length > 0) {

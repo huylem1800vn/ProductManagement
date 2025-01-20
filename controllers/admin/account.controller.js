@@ -107,3 +107,18 @@ module.exports.editPatch = async (req, res) => {
   // console.log(req.params.id);
   // console.log(req.body);
 }
+
+// [DELETE] /admin/accounts/delete/:id
+module.exports.deleteAccount = async (req, res) => {
+  try {
+    const accountId = req.params.id;
+
+    // Thực hiện xóa logic: Có thể là xóa mềm hoặc xóa hoàn toàn
+    await Account.findByIdAndUpdate(accountId, { deleted: true });
+
+    res.status(200).json({ success: true, message: "Tài khoản đã được xóa thành công." });
+  } catch (error) {
+    console.error("Error deleting account:", error);
+    res.status(500).json({ success: false, message: "Có lỗi xảy ra, vui lòng thử lại." });
+  }
+}

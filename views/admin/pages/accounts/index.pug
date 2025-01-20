@@ -74,6 +74,8 @@ block main
                   if(role.permissions.includes("accounts_delete"))
                   button(
                     class="btn btn-danger btn-sm ml-1"
+                    delete-account
+                    data-id=item.id
                   ) Xóa
   else 
     h1 Không có quyền truy cập
