@@ -111,3 +111,15 @@ module.exports.permissionsPatch = async (req, res) => {
 
     res.redirect("back");
 }
+
+// [DELETE] admin/roles/delete/:id
+module.exports.deleteRole = async (req, res) => {
+    try {
+        const roleId = req.params.id;
+        await Role.findByIdAndDelete(roleId);
+        res.json({ success: true });
+      } catch (error) {
+        console.error(error);
+        res.json({ success: false });
+      }
+}

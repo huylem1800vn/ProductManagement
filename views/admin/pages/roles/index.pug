@@ -50,6 +50,7 @@ block main
                     if(role.permissions.includes("roles_delete"))
                       button(
                         class="btn btn-danger btn-sm ml-1"
+                        onclick=`deleteRole('${item.id}')`
                       ) Xóa
               else
                 tr

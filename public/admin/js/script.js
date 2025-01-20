@@ -74,6 +74,29 @@ if(listButtonChangeStauts.length > 0){
 }
 // end button-change-status 
 
+// Button delete Role
+function deleteRole(roleId) {
+    if (confirm("Bạn có chắc chắn muốn xóa nhóm quyền này không?")) {
+      fetch(`/${prefixAdmin}/roles/delete/${roleId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert("Xóa thành công!");
+          location.reload();
+        } else {
+          alert("Xóa thất bại!");
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  }
+// End button delete Role
+
 // checkbox-multi 
 const checkboxMulti = document.querySelector("[checkbox-multi]");
 if(checkboxMulti) {
