@@ -1,52 +1,68 @@
 include ../mixins/sub-menu.pug
 
 header.header
-  .container
-    .row.align-items-center
-      .col-3
-        .inner-logo
-          a(href="/")
-            img(src=settingGeneral.logo, alt="Logo")
+  .header-top
+    .container
+      .row.align-items-center
+        // Logo
+        .col-3.col-md-2
+          .inner-logo
+            a(href="/")
+              img(src=settingGeneral.logo, alt="Logo")
 
-      .col-5
-        form(
-          action="/search"
-          method="GET"
-        ) 
-          div(class="form-group d-flex mb-0")
-            input(
-              type="text"
-              placeholder="Nhập từ khóa..."
-              class="form-control"
-              name="keyword"
-              value=keyword
-            )
-            button(
-              type="submit"
-              class="btn btn-primary"
-            ) 
-              i.fa-solid.fa-magnifying-glass
+        // Search Bar
+        .col-6.col-md-7
+          form.search-form(
+            action="/search"
+            method="GET"
+          ) 
+            div(class="form-group d-flex mb-0")
+              input(
+                type="text"
+                placeholder="Tìm kiếm sản phẩm, thương hiệu..."
+                class="form-control"
+                name="keyword"
+                value=keyword
+              )
+              button(
+                type="submit"
+                class="btn btn-search"
+              ) 
+                i.fa-solid.fa-magnifying-glass
 
-      .col-4.d-flex.justify-content-end
-        .inner-menu
-          ul
-            li
-              a(href="/") Trang chủ
-            li(class="sub-menu")
-              a(href="/products") Sản phẩm
-              +sub-menu(layoutProductCategory)
-            li 
-              a(href="/cart") Giỏ hàng
-                i(class="fa-solid fa-cart-shopping")
-                | (#{miniCart ? miniCart.products.length : 0})
+        // Utilities
+        .col-3.col-md-3.d-flex.justify-content-end.align-items-center.header-utils
+          .cart-wrapper.mr-4
+            a(href="/cart" title="Giỏ hàng")
+              i.fa-solid.fa-cart-shopping.icon-large
+              span.cart-badge #{miniCart ? miniCart.products.length : 0}
+          
+          .auth-wrapper
             if(user)
-              li 
-                a(href="/user/info") #{user.fullName}
-              li 
-                a(href="/user/logout") Đăng Xuất
-            else 
-              li 
-                a(href="/user/register") Đăng ký
-              li 
-                a(href="/user/login") Đăng nhập
-                  i(class="fa-solid fa-right-to-bracket")
+              a.auth-link(href="/user/info" title="Tài khoản")
+                i.fa-regular.fa-user.icon-large.mr-1
+                span.d-none.d-md-inline.user-name #{user.fullName}
+              a.auth-link.ml-3.text-danger(href="/user/logout" title="Đăng xuất")
+                i.fa-solid.fa-right-from-bracket.icon-large
+            else
+              a.auth-link(href="/user/login" title="Đăng nhập / Đăng ký")
+                i.fa-regular.fa-user.icon-large.mr-1
+                span.d-none.d-md-inline Đăng nhập
+
+  .header-bottom.sticky-top
+    .container
+      .row
+        .col-12
+          .inner-menu
+            ul
+              li
+                a(href="/") Trang chủ
+              li(class="sub-menu")
+                a(href="/products") Danh mục Sản phẩm
+                +sub-menu(layoutProductCategory)
+              li
+                a(href="#") Khuyến mãi Hot
+              li
+                a(href="#") Về chúng tôi
+              li
+                a(href="#") Liên hệ
