@@ -1,17 +1,23 @@
 header.header
   .container-fluid
     .row.align-items-center
-      .col-3
+      .col-6.col-md-4
         .inner-logo
-          a(href=`/${prefixAdmin}/dashboard`) ADMIN
+          a(href=`/${prefixAdmin}/dashboard`)
+            i.fa-solid.fa-boxes-stacked.mr-2
+            | Product Admin
 
-      .col-9
-        div(class="text-right")
+      .col-6.col-md-8
+        div(class="header-actions text-right")
           a(
             href=`/${prefixAdmin}/my-account`
-            class="btn btn-primary btn-sm mr-2"
-          ) #{user.fullName}
+            class="btn btn-light btn-sm mr-2"
+          )
+            i.fa-regular.fa-user.mr-1
+            | #{user.fullName}
           a(
             href=`/${prefixAdmin}/auth/logout`
-            class="btn btn-danger btn-sm"
-          ) Đăng xuất
+            class="btn btn-outline-danger btn-sm"
+          )
+            i.fa-solid.fa-arrow-right-from-bracket.mr-1
+            | Đăng xuất
