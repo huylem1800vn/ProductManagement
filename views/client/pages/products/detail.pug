@@ -10,34 +10,37 @@ block main
 
     .product-detail
         .container.my-5
-            .row
-                .col-6
+            .row.align-items-start
+                .col-lg-6.mb-4.mb-lg-0
                     .inner-thumb
                         img(src=product.thumbnail, alt=product.title)
-                .col-6
-                    h1(class="inner-title") #{product.title}
-
-                    if (product.category)
+                .col-lg-6
+                    .detail-panel
+                      if (product.category)
                         div(class="inner-category")
-                        span Danh mục: 
-                        a(href=`/products/${product.category.slug}`) #{product.category.title}
+                          span Danh mục: 
+                          a(href=`/products/${product.category.slug}`) #{product.category.title}
 
-                    if (product.priceNew)
+                      h1(class="inner-title") #{product.title}
+
+                      if (product.priceNew)
                         div(class="inner-price-new") #{product.priceNew}$
 
-                    if (product.price)
+                      if (product.price)
                         div(class="inner-price-old") #{product.price}$
 
-                    if (product.discountPercentage)
+                      if (product.discountPercentage)
                         div(class="inner-percent") Giảm tới <span>#{product.discountPercentage}%</span>
 
-                    if (product.stock)
+                      if (product.stock)
                         div(class="inner-stock") Còn lại <span>#{product.stock}</span> sản phẩm
 
-                    form(
+                      form(
                         action=`/cart/add/${product.id}`
                         method="POST"
-                    )
+                        class="detail-cart-form"
+                      )
+                        label Số lượng
                         input(
                         class="form-control mb-2"
                         type="number"
@@ -48,8 +51,13 @@ block main
                         )
                         button(
                         type="submit"
-                        class="btn btn-success btn-block"
-                        ) Thêm vào giỏ hàng
+                        class="btn btn-success btn-block btn-add-cart"
+                        )
+                          i.fa-solid.fa-cart-plus.mr-2
+                          | Thêm vào giỏ hàng
+                      .detail-note
+                        i.fa-solid.fa-circle-check.mr-2
+                        | Kiểm tra kỹ số lượng tồn kho trước khi đặt hàng.
         hr
                     
         .container.my-5

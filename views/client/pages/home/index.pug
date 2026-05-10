@@ -10,11 +10,36 @@ block main
     .container
       .row.align-items-center
         .col-md-6.hero-content
-          h1.hero-title Khám phá bộ sưu tập sản phẩm mới nhất
-          p.hero-desc Trải nghiệm mua sắm tuyệt vời với hàng ngàn ưu đãi hấp dẫn. Chất lượng đỉnh cao, thiết kế thời thượng.
-          a.btn.btn-primary.hero-btn(href="/products") Xem bộ sưu tập
+          p.hero-eyebrow Sản phẩm chọn lọc mỗi ngày
+          h1.hero-title Mua sắm dễ hơn với những sản phẩm đang được yêu thích
+          p.hero-desc Tìm nhanh sản phẩm phù hợp, xem giá rõ ràng và thêm vào giỏ chỉ trong vài thao tác.
+          .hero-actions
+            a.btn.btn-primary.hero-btn(href="/products")
+              i.fa-solid.fa-bag-shopping.mr-2
+              | Xem sản phẩm
+            a.btn.btn-outline-dark.hero-secondary(href="/cart")
+              i.fa-solid.fa-cart-shopping.mr-2
+              | Giỏ hàng
         .col-md-6.hero-image
-          img.img-fluid(src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1470&auto=format&fit=crop", alt="Hero Banner")
+          img.img-fluid(src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?q=80&w=1470&auto=format&fit=crop", alt="Khách hàng mua sắm trực tuyến")
+
+  .container
+    .shop-benefits
+      .benefit-item
+        i.fa-solid.fa-truck-fast
+        div
+          strong Giao hàng nhanh
+          span Theo dõi đơn dễ dàng
+      .benefit-item
+        i.fa-solid.fa-shield-halved
+        div
+          strong Sản phẩm rõ nguồn
+          span Thông tin minh bạch
+      .benefit-item
+        i.fa-solid.fa-rotate-left
+        div
+          strong Hỗ trợ đổi trả
+          span Mua sắm yên tâm
 
   .container.my-5
     .row
@@ -23,7 +48,7 @@ block main
 
     .row
       each item in productsFeatured
-        .col-4.mb-3
+        .col-12.col-sm-6.col-lg-4.mb-4
           .product-item
             .inner-image
               a(href=`/products/detail/${item.slug}`)
@@ -42,7 +67,7 @@ block main
 
     .row
       each item in productsNew
-        .col-4.mb-3
+        .col-12.col-sm-6.col-lg-4.mb-4
           .product-item
             .inner-image
               a(href=`/products/detail/${item.slug}`)

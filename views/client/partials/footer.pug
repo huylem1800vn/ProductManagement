@@ -1,2 +1,10 @@
 footer.footer
-  | #{settingGeneral.copyright}
+  .container
+    .row.align-items-center
+      .col-md-6
+        .footer-brand Product Store
+        p.mb-0 #{settingGeneral.copyright}
+      .col-md-6.text-md-right.mt-3.mt-md-0
+        a(href="/products") Sản phẩm
+        a(href="/cart") Giỏ hàng
+        a(href="/user/login") Tài khoản
